@@ -3,7 +3,7 @@ name: Auto Format
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * 1' # every Monday at 9:00
+    - cron: '0 0 * * 1' # every Monday at T00:00Z
 
 env:
   FLUTTER_VERSION: '2.5.3'
