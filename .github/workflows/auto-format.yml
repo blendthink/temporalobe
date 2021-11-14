@@ -27,7 +27,7 @@ jobs:
           FLUTTER_VERSION=${FLUTTER_SDK_VERSION%@*}
           FLUTTER_CHANNEL=${FLUTTER_SDK_VERSION#*@}
           echo "::set-output name=version::$FLUTTER_VERSION"
-          echo "::set-output name=channel::$FLUTTER_VERSION"
+          echo "::set-output name=channel::$FLUTTER_CHANNEL"
 
       - name: setup flutter
         uses: subosito/flutter-action@v1.5.3
