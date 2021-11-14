@@ -6,8 +6,6 @@ on:
     - cron: '0 0 * * 1' # every Monday at T00:00Z
 
 env:
-  FLUTTER_VERSION: '2.5.3'
-  FLUTTER_CHANNEL: 'stable'
   FORMAT_PATHS: '.'
 
 jobs:
@@ -22,11 +20,20 @@ jobs:
         with:
           ref: main
 
+      - name: read flutter info
+        id: flutter_info
+        run: |
+          FLUTTER_SDK_VERSION=$(< .fvm/fvm_config.json jq -r .flutterSdkVersion)
+          FLUTTER_VERSION=${FLUTTER_SDK_VERSION%@*}
+          FLUTTER_CHANNEL=${FLUTTER_SDK_VERSION#*@}
+          echo "::set-output name=version::$FLUTTER_VERSION"
+          echo "::set-output name=channel::$FLUTTER_VERSION"
+
       - name: setup flutter
         uses: subosito/flutter-action@v1.5.3
         with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-          channel: ${{ env.FLUTTER_CHANNEL }}
+          flutter-version: ${{ steps.flutter_info.outputs.version }}
+          channel: ${{ steps.flutter_info.outputs.channel }}
 
       - name: format
         run: flutter format $FORMAT_PATHS
