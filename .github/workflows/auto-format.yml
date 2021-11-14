@@ -27,7 +27,7 @@ jobs:
           fvm install
 
       - name: format
-        run: flutter format $FORMAT_PATHS
+        run: fvm flutter format $FORMAT_PATHS
 
       - name: create pull request
         uses: peter-evans/create-pull-request@v3.11.0
