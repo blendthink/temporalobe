@@ -25,7 +25,7 @@ jobs:
           brew tap leoafarias/fvm
           brew install fvm
           fvm install
-          echo "$FVM_HOME/default/bin" >> $GITHUB_PATH
+          echo "$GITHUB_WORKSPACE/.fvm/flutter_sdk/bin" >> $GITHUB_PATH
 
       - name: format
         run: flutter format $FORMAT_PATHS
