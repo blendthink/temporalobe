@@ -25,9 +25,10 @@ jobs:
           brew tap leoafarias/fvm
           brew install fvm
           fvm install
+          echo "$FVM_HOME/default/bin" >> $GITHUB_PATH
 
       - name: format
-        run: fvm flutter format $FORMAT_PATHS
+        run: flutter format $FORMAT_PATHS
 
       - name: create pull request
         uses: peter-evans/create-pull-request@v3.11.0
