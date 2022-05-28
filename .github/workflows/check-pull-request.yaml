@@ -46,7 +46,7 @@ jobs:
             ${{ github.workspace }}/.flutter-plugins
             ${{ github.workspace }}/.flutter-plugin-dependencies
             ${{ github.workspace }}/.dart-tool/package_config.json
-          key: build-pubspec-${{ hashFiles(format('{0}{1}'), github.workspace, '/pubspec.lock') }}
+          key: build-pubspec-${{ hashFiles(format('{0}{1}', github.workspace, '/pubspec.lock')) }}
           restore-keys: |
             build-pubspec-
 
@@ -55,7 +55,11 @@ jobs:
 
       # https://github.com/invertase/github-action-dart-analyzer
       - name: analyze
-      - uses: invertase/github-action-dart-analyzer@v1
+        uses: invertase/github-action-dart-analyzer@v1
+        with:
+          fatal-infos: false
+          fatal-warning: false
+          annotate-only: true
 
       - name: run test
         run: flutter test --no-pub --machine > test_report.log
