@@ -46,7 +46,7 @@ jobs:
             ${{ github.workspace }}/.flutter-plugins
             ${{ github.workspace }}/.flutter-plugin-dependencies
             ${{ github.workspace }}/.dart-tool/package_config.json
-          key: build-pubspec-${{ hashFiles(format('{0}{1}'), github.workspace, '/pubspec.lock') }}
+          key: build-pubspec-${{ hashFiles(format('{0}{1}', github.workspace, '/pubspec.lock')) }}
           restore-keys: |
             build-pubspec-
 
