@@ -58,6 +58,7 @@ jobs:
         uses: invertase/github-action-dart-analyzer@v1
         with:
           fatal-infos: true
+          annotate-only: true
 
       - name: run test
         run: flutter test --no-pub --machine > test_report.log
