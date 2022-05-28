@@ -55,7 +55,7 @@ jobs:
 
       # https://github.com/invertase/github-action-dart-analyzer
       - name: analyze
-      - uses: invertase/github-action-dart-analyzer@v1
+        uses: invertase/github-action-dart-analyzer@v1
 
       - name: run test
         run: flutter test --no-pub --machine > test_report.log
