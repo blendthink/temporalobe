@@ -4,13 +4,14 @@ A password management application.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+// TODO
 
-A few resources to get you started if this is your first Flutter project:
+## Dart Defines
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+| Environment | APP_FLAVOR | APP_NAME    | APP_ID_SUFFIX |
+|-------------|------------|-------------|---------------|
+| development | dev        | dev         | dev           |
+| staging     | stg        | stg         | stg           |
+| production  | prd        | temporalobe | -             |
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+※ The `--dart-define` key name must be prefixed with `APP_` to be written to "ios/Flutter/DartDefines.xcconfig".
