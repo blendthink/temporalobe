@@ -1,0 +1,34 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "dev",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--dart-define=APP_FLAVOR=dev",
+        "--dart-define=APP_NAME=dev",
+        "--dart-define=APP_ID_SUFFIX=dev"
+      ]
+    },
+    {
+      "name": "stg",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--dart-define=APP_FLAVOR=stg",
+        "--dart-define=APP_NAME=stg",
+        "--dart-define=APP_ID_SUFFIX=stg"
+      ]
+    },
+    {
+      "name": "prd",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--dart-define=APP_FLAVOR=prd",
+        "--dart-define=APP_NAME=temporalobe"
+      ]
+    }
+  ]
+}
