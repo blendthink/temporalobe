@@ -21,6 +21,15 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def dartDefines = project.property('dart-defines')
+        .split(',')
+        .collect { new String(it.decodeBase64(), 'UTF-8') }
+        .findAll { it.startsWith('APP_') }
+        .collectEntries {
+            def pair = it.split('=')
+            [(pair.first()): pair.last()]
+        }
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -44,10 +53,12 @@ android {
 
     defaultConfig {
         applicationId "dev.blendthink.temporalobe"
+        applicationIdSuffix dartDefines.APP_ID_SUFFIX
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        resValue "string", "app_name", dartDefines.APP_NAME
     }
 
     buildTypes {
