@@ -1,5 +1,5 @@
 platform :ios do
-  lane :update-certificate do
+  lane :update_certificate do
     env = ENV['ENVIRONMENT']
     app_id_suffix = env == 'prd' ? '' : ".#{env}"
     app_id = "dev.blendthink.temporalobe#{app_id_suffix}"

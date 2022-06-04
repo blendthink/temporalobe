@@ -36,7 +36,7 @@ jobs:
         run: bundle install --gemfile=.github/fastlane/Gemfile
 
       - name: fastlane match
-        run: fastlane ios update-certificate
+        run: fastlane ios update_certificate
         working-directory: ./ios
         env:
           ENVIRONMENT: ${{ github.event.inputs.environment }}
