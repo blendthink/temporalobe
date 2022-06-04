@@ -1,0 +1,48 @@
+name: update certificate
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: environment
+        required: true
+        type: environment
+
+jobs:
+  update:
+    runs-on: macos-12
+
+    steps:
+      # https://github.com/actions/checkout
+      - name: checkout
+        uses: actions/checkout@v3
+
+      # https://github.com/maxim-lobanov/setup-xcode
+      - name: setup xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '13.4'
+
+      # https://github.com/actions/cache
+      - name: cache gems
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gem-bundler-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gem-bundler-
+
+      - name: setup fastlane
+        run: bundle install --gemfile=.github/fastlane/Gemfile
+
+      - name: fastlane match
+        run: fastlane ios update-certificate
+        working-directory: ./ios
+        env:
+          ENVIRONMENT: ${{ github.event.inputs.environment }}
+          KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_KEY_CONTENT }}
+          MATCH_PASSWORD: ${{ secrets.FASTLANE_MATCH_PASSWORD }}
+          GITHUB_USER: ${{ secrets.FASTLANE_MATCH_GITHUB_USER }}
+          GITHUB_TOKEN: ${{ secrets.FASTLANE_MATCH_GITHUB_TOKEN }}

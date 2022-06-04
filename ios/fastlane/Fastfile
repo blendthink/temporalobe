@@ -1,0 +1,18 @@
+platform :ios do
+  lane :update-certificate do
+    env = ENV['ENVIRONMENT']
+    app_id_suffix = env == 'prd' ? '' : ".#{env}"
+    app_id = "dev.blendthink.temporalobe#{app_id_suffix}"
+
+    user = ENV['GITHUB_USER']
+    token = ENV["GITHUB_TOKEN"]
+    authorization = Base64.strict_encode64("#{user}:#{token}")
+
+    match(
+      git_basic_authorization: authorization,
+      api_key: api_key,
+      app_identifier: app_id,
+      type: "appstore"
+    )
+  end
+end
