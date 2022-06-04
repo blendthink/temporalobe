@@ -8,10 +8,16 @@ platform :ios do
     token = ENV["GITHUB_TOKEN"]
     authorization = Base64.strict_encode64("#{user}:#{token}")
 
+    api_key = app_store_connect_api_key(
+      key_id: ENV['KEY_ID'],
+      issuer_id: ENV['ISSUER_ID'],
+      key_content: ENV['KEY_CONTENT'],
+      )
+
     match(
+      app_identifier: app_id,
       git_basic_authorization: authorization,
       api_key: api_key,
-      app_identifier: app_id,
       type: "appstore"
     )
   end
