@@ -1,24 +1,56 @@
 platform :ios do
+
   lane :update_certificate do
+    access_certificate(readonly: false)
+  end
+
+  lane :read_certificate do
+    setup_ci
+    access_certificate(readonly: true)
+  end
+
+  lane :deploy_beta do
+    app_id = get_app_id()
+    api_key = get_api_key()
+
+    upload_to_testflight(
+      app_identifier: app_id,
+      api_key: api_key,
+      ipa: "../build/ios/ipa/Runner.ipa",
+      skip_waiting_for_build_processing: true,
+    )
+  end
+
+  private_lane :get_api_key do
+    app_store_connect_api_key(
+      key_id: ENV['KEY_ID'],
+      issuer_id: ENV['ISSUER_ID'],
+      key_content: ENV['KEY_CONTENT'],
+    )
+  end
+
+  private_lane :get_app_id do
     env = ENV['ENVIRONMENT']
     app_id_suffix = env == 'prd' ? '' : ".#{env}"
-    app_id = "dev.blendthink.temporalobe#{app_id_suffix}"
+    "dev.blendthink.temporalobe#{app_id_suffix}"
+  end
+
+  private_lane :access_certificate do |options|
+    readonly = options[:readonly] || throw(:require_readonly)
+
+    api_key = get_api_key()
+    app_id = get_app_id()
 
     user = ENV['GITHUB_USER']
     token = ENV["GITHUB_TOKEN"]
     authorization = Base64.strict_encode64("#{user}:#{token}")
 
-    api_key = app_store_connect_api_key(
-      key_id: ENV['KEY_ID'],
-      issuer_id: ENV['ISSUER_ID'],
-      key_content: ENV['KEY_CONTENT'],
-      )
-
     match(
+      type: "appstore",
+      api_key: api_key,
       app_identifier: app_id,
       git_basic_authorization: authorization,
-      api_key: api_key,
-      type: "appstore"
+      readonly: readonly,
     )
   end
 end
