@@ -114,11 +114,11 @@ jobs:
       - name: replace xcodeproj params
         run: |
           find **/*.xcodeproj -type f -exec \
-            sed -i "" -E 's/DEVELOPMENT_TEAM = "*";/DEVELOPMENT_TEAM = "${{ secrets.APP_STORE_CONNECT_TEAM_ID }}";/g' {} +
+            sed -i "" -E 's/DEVELOPMENT_TEAM = ".*";/DEVELOPMENT_TEAM = "${{ secrets.APP_STORE_CONNECT_TEAM_ID }}";/g' {} +
           find **/*.xcodeproj -type f -exec \
-            sed -i "" -E 's/PRODUCT_BUNDLE_IDENTIFIER = "*";/PRODUCT_BUNDLE_IDENTIFIER = "${{ env.APP_ID }}";/g' {} +
+            sed -i "" -E 's/PRODUCT_BUNDLE_IDENTIFIER = ".*";/PRODUCT_BUNDLE_IDENTIFIER = "${{ env.APP_ID }}";/g' {} +
           find **/*.xcodeproj -type f -exec \
-            sed -i "" -E 's/PROVISIONING_PROFILE_SPECIFIER = "*";/PROVISIONING_PROFILE_SPECIFIER = "match AppStore ${{ env.APP_ID }}";/g' {} +
+            sed -i "" -E 's/PROVISIONING_PROFILE_SPECIFIER = ".*";/PROVISIONING_PROFILE_SPECIFIER = "match AppStore ${{ env.APP_ID }}";/g' {} +
 
       # https://github.com/hey24sheep/azure-flutter-tasks/issues/35
       - name: generate ExportOptions.plist
