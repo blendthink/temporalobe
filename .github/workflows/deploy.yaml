@@ -86,6 +86,9 @@ jobs:
           GITHUB_USER: ${{ secrets.FASTLANE_MATCH_GITHUB_USER }}
           GITHUB_TOKEN: ${{ secrets.FASTLANE_MATCH_GITHUB_TOKEN }}
 
+      - name: load dependencies
+        run: flutter pub get
+
       - name: create plist
         run: |
           dart tool/grind.dart create-plist \
