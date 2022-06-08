@@ -12,6 +12,7 @@ enum Flavor { dev, stg, prd }
 @Task('Create DartDefines.xcconfig and key.properties.')
 void preBuild() {
   final args = context.invocation.arguments;
+  final appTeam = args.getOption('team') ?? '';
   final appFlavor = args.getOption('flavor')!;
   final flavor = Flavor.values.byName(appFlavor);
 
@@ -33,6 +34,7 @@ void preBuild() {
   }
 
   final iosEnvironments = StringBuffer()
+    ..writeln('APP_TEAM=$appTeam')
     ..writeln('APP_ID=$appId')
     ..writeln('APP_NAME=$appName')
     ..writeln('APP_MATCH_NAME=match AppStore $appId');
