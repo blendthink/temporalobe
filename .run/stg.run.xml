@@ -1,7 +1,9 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="stg" type="FlutterRunConfigurationType" factoryName="Flutter">
-    <option name="additionalArgs" value="--dart-define=APP_FLAVOR=stg --dart-define=APP_NAME=stg --dart-define=APP_ID_SUFFIX=stg" />
+    <option name="additionalArgs" value="--dart-define=APP_FLAVOR=stg" />
     <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
-    <method v="2" />
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="stg-pre-build" run_configuration_type="DartCommandLineRunConfigurationType" />
+    </method>
   </configuration>
 </component>

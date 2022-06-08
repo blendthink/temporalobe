@@ -21,14 +21,15 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-def dartDefines = project.property('dart-defines')
-        .split(',')
-        .collect { new String(it.decodeBase64(), 'UTF-8') }
-        .findAll { it.startsWith('APP_') }
-        .collectEntries {
-            def pair = it.split('=')
-            [(pair.first()): pair.last()]
-        }
+def keyProperties = new Properties()
+def keyPropertiesFile = rootProject.file('key.properties')
+if (keyPropertiesFile.exists()) {
+    keyPropertiesFile.withReader('UTF-8') { reader ->
+        keyProperties.load(reader)
+    }
+}
+def appIdSuffix = keyProperties.getProperty('APP_ID_SUFFIX')
+def appName = keyProperties.getProperty('APP_NAME')
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
@@ -53,12 +54,12 @@ android {
 
     defaultConfig {
         applicationId "dev.blendthink.temporalobe"
-        applicationIdSuffix dartDefines.APP_ID_SUFFIX
+        applicationIdSuffix appIdSuffix
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        resValue "string", "app_name", dartDefines.APP_NAME
+        resValue "string", "app_name", appName
     }
 
     buildTypes {
