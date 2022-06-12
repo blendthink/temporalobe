@@ -3,7 +3,7 @@
     <option name="additionalArgs" value="--dart-define=APP_FLAVOR=dev" />
     <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
     <method v="2">
-      <option name="RunConfigurationTask" enabled="true" run_configuration_name="pre-build" run_configuration_type="DartCommandLineRunConfigurationType" />
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="dev-pre-build" run_configuration_type="DartCommandLineRunConfigurationType" />
     </method>
   </configuration>
 </component>
