@@ -101,7 +101,7 @@ jobs:
             --flavor=${{ github.event.inputs.environment }} \
             --team=${{ secrets.APP_STORE_CONNECT_TEAM_ID }}
           flutter build ipa \
-            --dart-define=APP_FLAVOR=${{ github.event.inputs.environment }} \
+            --dart-define=FLAVOR=${{ github.event.inputs.environment }} \
             --export-options-plist=ExportOptions.plist
 
       - name: deploy to testflight
