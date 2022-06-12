@@ -9,7 +9,7 @@ const baseAppName = 'Temporalobe';
 
 enum Flavor { dev, stg, prd }
 
-@Task('Create DartDefines.xcconfig and key.properties.')
+@Task('Create Build.xcconfig and build.properties.')
 void preBuild() {
   final args = context.invocation.arguments;
   final appTeam = args.getOption('team') ?? '';
@@ -40,7 +40,7 @@ void preBuild() {
     ..writeln('APP_MATCH_NAME=match AppStore $appId');
 
   final appRoot = FilePath.current.path;
-  File('$appRoot/ios/Flutter/DartDefines.xcconfig')
+  File('$appRoot/ios/Flutter/Build.xcconfig')
     ..writeAsStringSync(iosEnvironments.toString())
     ..createSync();
 
@@ -48,7 +48,7 @@ void preBuild() {
     ..writeln('APP_ID_SUFFIX=$appIdSuffix')
     ..writeln('APP_NAME=$appName');
 
-  File('$appRoot/android/key.properties')
+  File('$appRoot/android/build.properties')
     ..writeAsStringSync(androidEnvironments.toString())
     ..createSync();
 }

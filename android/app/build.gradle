@@ -21,15 +21,15 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-def keyProperties = new Properties()
-def keyPropertiesFile = rootProject.file('key.properties')
-if (keyPropertiesFile.exists()) {
-    keyPropertiesFile.withReader('UTF-8') { reader ->
-        keyProperties.load(reader)
+def buildProperties = new Properties()
+def buildPropertiesFile = rootProject.file('build.properties')
+if (buildPropertiesFile.exists()) {
+    buildPropertiesFile.withReader('UTF-8') { reader ->
+        buildProperties.load(reader)
     }
 }
-def appIdSuffix = keyProperties.getProperty('APP_ID_SUFFIX')
-def appName = keyProperties.getProperty('APP_NAME')
+def appIdSuffix = buildProperties.getProperty('APP_ID_SUFFIX')
+def appName = buildProperties.getProperty('APP_NAME')
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
