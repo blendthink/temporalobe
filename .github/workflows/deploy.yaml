@@ -86,23 +86,11 @@ jobs:
           GITHUB_USER: ${{ secrets.FASTLANE_MATCH_GITHUB_USER }}
           GITHUB_TOKEN: ${{ secrets.FASTLANE_MATCH_GITHUB_TOKEN }}
 
-      - name: load dependencies
-        run: flutter pub get
-
-      - name: create plist
-        run: |
-          dart tool/grind.dart create-plist \
-            --flavor=${{ github.event.inputs.environment }} \
-            --team=${{ secrets.APP_STORE_CONNECT_TEAM_ID }}
-
       - name: build ipa
         run: |
-          dart tool/grind.dart pre-build \
-            --flavor=${{ github.event.inputs.environment }} \
-            --team=${{ secrets.APP_STORE_CONNECT_TEAM_ID }}
-          flutter build ipa \
-            --dart-define=FLAVOR=${{ github.event.inputs.environment }} \
-            --export-options-plist=ExportOptions.plist
+          make build-ipa \
+            FLAVOR=${{ github.event.inputs.environment }} \
+            TEAM_ID=${{ secrets.APP_STORE_CONNECT_TEAM_ID }}
 
       - name: deploy to testflight
         run: fastlane ios deploy_beta
