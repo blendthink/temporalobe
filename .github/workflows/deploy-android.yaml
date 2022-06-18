@@ -1,0 +1,67 @@
+name: deploy-android
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: environment
+        required: true
+        type: environment
+
+jobs:
+  deploy-android:
+    runs-on: ubuntu-22.04
+
+    timeout-minutes: 15
+
+    steps:
+
+      # https://github.com/actions/checkout
+      - name: checkout
+        uses: actions/checkout@v3
+
+      # https://github.com/kuhnroyal/flutter-fvm-config-action
+      - name: fetch flutter config
+        uses: kuhnroyal/flutter-fvm-config-action@v1
+
+      # https://github.com/actions/cache
+      - name: cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ env.PUB_CACHE }}
+            ${{ github.workspace }}/.packages
+            ${{ github.workspace }}/.flutter-plugins
+            ${{ github.workspace }}/.flutter-plugin-dependencies
+            ${{ github.workspace }}/.dart_tool/package_config.json
+          key: build-pubspec-${{ hashFiles(format('{0}{1}', github.workspace, '/pubspec.lock')) }}
+          restore-keys: |
+            build-pubspec-
+
+      # https://github.com/subosito/flutter-action
+      - name: set up flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+          cache: true
+          cache-key: ${{ env.FLUTTER_VERSION }}-${{ env.FLUTTER_CHANNEL }}
+
+      - name: setup fastlane
+        run: bundle install --gemfile=.github/fastlane/Gemfile
+
+      - name: build ipa
+        run: |
+          make build-aab \
+            FLAVOR=${{ github.event.inputs.environment }} \
+            KEY_ALIAS=${{ secrets.UPLOAD_KEY_ALIAS }} \
+            KEY_PASSWORD=${{ secrets.UPLOAD_KEY_PASSWORD }} \
+            KEY_STORE_BASE64=${{ secrets.UPLOAD_KEY_BASE64 }} \
+            KEY_STORE_PASSWORD=${{ secrets.UPLOAD_KEY_STORE_PASSWORD }}
+
+      - name: deploy to internal test
+        run: fastlane android deploy_internal
+        working-directory: ./android
+        env:
+          ENVIRONMENT: ${{ github.event.inputs.environment }}
+          SERVICE_ACCOUNT_KEY_BASE64: ${{ secrets.SERVICE_ACCOUNT_KEY_BASE64 }}
