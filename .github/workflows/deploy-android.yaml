@@ -47,7 +47,7 @@ jobs:
           cache: true
           cache-key: ${{ env.FLUTTER_VERSION }}-${{ env.FLUTTER_CHANNEL }}
 
-      - name: build ipa
+      - name: build aab
         run: |
           make build-aab \
             FLAVOR=${{ github.event.inputs.environment }} \
