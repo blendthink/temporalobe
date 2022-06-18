@@ -21,11 +21,11 @@ File createConfig({
 File createUploadKey({
   required String uploadKeyBase64,
 }) {
-  final decoded = utf8.fuse(base64).decode(uploadKeyBase64);
+  final decoded = base64.decode(uploadKeyBase64);
 
   final appRoot = FilePath.current.path;
   return File('$appRoot/android/upload.jks')
-    ..writeAsStringSync(decoded)
+    ..writeAsBytesSync(decoded)
     ..createSync();
 }
 
