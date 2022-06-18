@@ -1,3 +1,5 @@
+default_platform(:ios)
+
 platform :ios do
 
   lane :update_certificate do
@@ -51,19 +53,6 @@ platform :ios do
       app_identifier: app_id,
       git_basic_authorization: authorization,
       readonly: readonly,
-    )
-  end
-end
-
-platform :android do
-
-  lane :deploy_internal do
-    json_key_data = Base64.strict_decode64(ENV['SERVICE_ACCOUNT_KEY_BASE64'])
-
-    upload_to_play_store(
-      track: 'internal',
-      aab: '../build/app/outputs/bundle/release/app-release.aab',
-      json_key_data: json_key_data,
     )
   end
 end
