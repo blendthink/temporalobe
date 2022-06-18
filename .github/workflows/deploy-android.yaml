@@ -47,9 +47,6 @@ jobs:
           cache: true
           cache-key: ${{ env.FLUTTER_VERSION }}-${{ env.FLUTTER_CHANNEL }}
 
-      - name: setup fastlane
-        run: bundle install --gemfile=.github/fastlane/Gemfile
-
       - name: build ipa
         run: |
           make build-aab \

@@ -71,9 +71,6 @@ jobs:
           cache: true
           cache-key: ${{ env.FLUTTER_VERSION }}-${{ env.FLUTTER_CHANNEL }}
 
-      - name: setup fastlane
-        run: bundle install --gemfile=.github/fastlane/Gemfile
-
       - name: fastlane match
         run: fastlane ios read_certificate
         working-directory: ./ios
