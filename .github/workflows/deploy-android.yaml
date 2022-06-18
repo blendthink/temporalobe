@@ -11,6 +11,7 @@ on:
 jobs:
   deploy-android:
     runs-on: ubuntu-22.04
+    environment: ${{ github.event.inputs.environment }}
 
     timeout-minutes: 15
 
