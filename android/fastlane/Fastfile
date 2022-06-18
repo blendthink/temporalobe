@@ -16,6 +16,7 @@ platform :android do
     upload_to_play_store(
       package_name: app_id,
       track: 'internal',
+      release_status: 'draft',
       aab: '../build/app/outputs/bundle/release/app-release.aab',
       json_key_data: json_key_data,
     )
