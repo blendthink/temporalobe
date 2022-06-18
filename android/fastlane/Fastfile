@@ -2,10 +2,19 @@ default_platform(:android)
 
 platform :android do
 
+  private_lane :get_app_id do
+    env = ENV['ENVIRONMENT']
+    app_id_suffix = env == 'prd' ? '' : ".#{env}"
+    "dev.blendthink.temporalobe#{app_id_suffix}"
+  end
+
   lane :deploy_internal do
     json_key_data = Base64.strict_decode64(ENV['SERVICE_ACCOUNT_KEY_BASE64'])
 
+    app_id = get_app_id()
+
     upload_to_play_store(
+      package_name: app_id,
       track: 'internal',
       aab: '../build/app/outputs/bundle/release/app-release.aab',
       json_key_data: json_key_data,
