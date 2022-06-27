@@ -17,7 +17,7 @@ dev_dependencies:
   blendthink_lints: ^1.0.0
   flutter_test:
     sdk: flutter
-  grinder: ^0.9.1
+  grinder: ^0.9.2
 
 flutter:
   uses-material-design: true
