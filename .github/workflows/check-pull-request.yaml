@@ -53,13 +53,20 @@ jobs:
       - name: install dependencies
         run: flutter pub get
 
-      # https://github.com/invertase/github-action-dart-analyzer
-      - name: analyze
-        uses: invertase/github-action-dart-analyzer@v1
-        with:
-          fatal-infos: false
-          fatal-warning: false
-          annotate-only: true
+      - name: flutter analyze
+        run: flutter analyze --no-pub > analyze.log
+        continue-on-error: true
+
+      - name: Install Danger-js
+        run: npm install -g danger
+
+      - name: Activate command
+        run: flutter pub global activate danger_dart
+
+      - name: Run danger ci
+        run: danger_dart ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: run test
         run: flutter test --no-pub --machine > test_report.log
