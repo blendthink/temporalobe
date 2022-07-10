@@ -14,14 +14,19 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_riverpod: ^2.0.0-dev.9
+  freezed_annotation: ^2.0.3
+  json_annotation: ^4.6.0
 
 dev_dependencies:
   blendthink_lints: ^2.0.0
+  build_runner: ^2.1.11
   danger_core: ^1.0.1
   danger_plugin_dart_analyze: ^1.0.1
   flutter_test:
     sdk: flutter
+  freezed: ^2.0.4
   grinder: ^0.9.2
+  json_serializable: ^6.3.1
 
 flutter:
   uses-material-design: true
