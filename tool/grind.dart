@@ -11,9 +11,9 @@ void main(List<String> args) => grind(args);
 void preBuild() {
   final args = context.invocation.arguments;
   final flavor = Flavor.values.byName(args.requireOption('flavor'));
-  final teamId = args.safeOption('teamId');
+  const teamId = String.fromEnvironment('teamId');
 
-  ios.createConfig(flavor: flavor, teamId: teamId);
+  ios.createConfig(flavor: flavor, teamId: teamId, isRelease: false);
   android.createConfig(flavor: flavor);
 }
 
@@ -25,7 +25,7 @@ void buildIpa() {
 
   final plistFile = ios.createPlist(flavor: flavor, teamId: teamId);
 
-  ios.createConfig(flavor: flavor, teamId: teamId);
+  ios.createConfig(flavor: flavor, teamId: teamId, isRelease: true);
 
   run(
     'flutter',

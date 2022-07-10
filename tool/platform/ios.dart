@@ -47,12 +47,22 @@ File createPlist({
 File createConfig({
   required Flavor flavor,
   required String teamId,
+  required bool isRelease,
 }) {
   final environments = StringBuffer()
     ..writeln('APP_TEAM=$teamId')
     ..writeln('APP_ID=${flavor.appId}')
-    ..writeln('APP_NAME=${flavor.appName}')
-    ..writeln('APP_MATCH_NAME=match AppStore ${flavor.appId}');
+    ..writeln('APP_NAME=${flavor.appName}');
+
+  if (isRelease) {
+    environments
+      ..writeln('APP_SIGN=iPhone Distribution')
+      ..writeln('APP_MATCH_NAME=match AppStore ${flavor.appId}');
+  } else {
+    environments
+      ..writeln('APP_SIGN=iPhone Developer')
+      ..writeln('APP_MATCH_NAME=development ${flavor.appId}');
+  }
 
   final appRoot = FilePath.current.path;
   return File('$appRoot/ios/Flutter/Build.xcconfig')
