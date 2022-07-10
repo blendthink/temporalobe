@@ -63,7 +63,7 @@ android {
     defaultConfig {
         applicationId "dev.blendthink.temporalobe"
         applicationIdSuffix appIdSuffix
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 26
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
