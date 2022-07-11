@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 class ServiceItem {
   const ServiceItem({
     required this.title,
-    required this.subtitle,
-    required this.domain,
+    required this.fqdn,
   });
 
   final String title;
-  final String subtitle;
-  final String domain;
+  final String fqdn;
 }
 
 class ServiceTile extends StatelessWidget {
@@ -24,25 +22,25 @@ class ServiceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const leadingSize = 24.0;
     return ListTile(
-      leading: SizedBox(
-        height: 48,
-        width: 48,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: CachedNetworkImageProvider(
-                'https://icon.horse/icon/${service.domain}',
-              ),
-            ),
+      leading: SizedBox.square(
+        dimension: leadingSize,
+        child: CachedNetworkImage(
+          fit: BoxFit.fill,
+          imageUrl:
+              'http://www.google.com/s2/favicons?domain=${service.fqdn}&sz=64',
+          errorWidget: (context, url, error) => const Icon(
+            Icons.hide_image_outlined,
+            size: leadingSize,
           ),
         ),
       ),
       title: Text(service.title),
-      subtitle: Text(service.subtitle),
       trailing: const Icon(Icons.more_vert),
+      onTap: () {
+        // TODO(blendthink): go to detail page.
+      },
     );
   }
 }
