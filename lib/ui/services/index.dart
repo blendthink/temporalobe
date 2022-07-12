@@ -4,7 +4,7 @@ import 'package:sticky_headers/sticky_headers.dart';
 import 'package:temporalobe/data/model/service/category.dart';
 import 'package:temporalobe/ui/services/component/service_tile.dart';
 
-class ServicesPage extends ConsumerWidget {
+class ServicesPage extends HookConsumerWidget {
   const ServicesPage({super.key});
 
   @override
