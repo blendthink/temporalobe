@@ -33,7 +33,6 @@ const CategorySchema = CollectionSchema(
   linkIds: {},
   backlinkLinkNames: {},
   getId: _categoryGetId,
-  setId: _categorySetId,
   getLinks: _categoryGetLinks,
   attachLinks: _categoryAttachLinks,
   serializeNative: _categorySerializeNative,
@@ -51,10 +50,6 @@ int? _categoryGetId(Category object) {
   } else {
     return object.id;
   }
-}
-
-void _categorySetId(Category object, int id) {
-  object.id = id;
 }
 
 List<IsarLinkBase<dynamic>> _categoryGetLinks(Category object) {
@@ -81,7 +76,6 @@ void _categorySerializeNative(
 Category _categoryDeserializeNative(IsarCollection<Category> collection, int id,
     IsarBinaryReader reader, List<int> offsets) {
   final object = Category();
-  object.id = id;
   object.name = reader.readString(offsets[0]);
   return object;
 }
@@ -109,8 +103,6 @@ Object _categorySerializeWeb(
 Category _categoryDeserializeWeb(
     IsarCollection<Category> collection, Object jsObj) {
   final object = Category();
-  object.id =
-      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int);
   object.name = IsarNative.jsObjectGet(jsObj, 'name') ?? '';
   return object;
 }
@@ -561,1869 +553,6 @@ extension CategoryQueryProperty
 // no_leading_underscores_for_local_identifiers,
 // inference_failure_on_function_invocation, prefer_const_constructors
 
-extension GetFqdnCollection on Isar {
-  IsarCollection<Fqdn> get fqdns => getCollection();
-}
-
-const FqdnSchema = CollectionSchema(
-  name: 'Fqdn',
-  schema:
-      '{"name":"Fqdn","idName":"id","properties":[{"name":"fqdn","type":"String"}],"indexes":[],"links":[{"name":"service","target":"Service"}]}',
-  idName: 'id',
-  propertyIds: {'fqdn': 0},
-  listProperties: {},
-  indexIds: {},
-  indexValueTypes: {},
-  linkIds: {'service': 0},
-  backlinkLinkNames: {},
-  getId: _fqdnGetId,
-  setId: _fqdnSetId,
-  getLinks: _fqdnGetLinks,
-  attachLinks: _fqdnAttachLinks,
-  serializeNative: _fqdnSerializeNative,
-  deserializeNative: _fqdnDeserializeNative,
-  deserializePropNative: _fqdnDeserializePropNative,
-  serializeWeb: _fqdnSerializeWeb,
-  deserializeWeb: _fqdnDeserializeWeb,
-  deserializePropWeb: _fqdnDeserializePropWeb,
-  version: 4,
-);
-
-int? _fqdnGetId(Fqdn object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
-  }
-}
-
-void _fqdnSetId(Fqdn object, int id) {
-  object.id = id;
-}
-
-List<IsarLinkBase<dynamic>> _fqdnGetLinks(Fqdn object) {
-  return [object.service];
-}
-
-void _fqdnSerializeNative(IsarCollection<Fqdn> collection, IsarCObject cObj,
-    Fqdn object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
-  final fqdn$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.fqdn);
-  final size = (staticSize + (fqdn$Bytes.length)) as int;
-  cObj.buffer = alloc(size);
-  cObj.buffer_length = size;
-
-  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], fqdn$Bytes);
-}
-
-Fqdn _fqdnDeserializeNative(IsarCollection<Fqdn> collection, int id,
-    IsarBinaryReader reader, List<int> offsets) {
-  final object = Fqdn();
-  object.fqdn = reader.readString(offsets[0]);
-  object.id = id;
-  _fqdnAttachLinks(collection, id, object);
-  return object;
-}
-
-P _fqdnDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
-    case 0:
-      return (reader.readString(offset)) as P;
-    default:
-      throw 'Illegal propertyIndex';
-  }
-}
-
-Object _fqdnSerializeWeb(IsarCollection<Fqdn> collection, Fqdn object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'fqdn', object.fqdn);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  return jsObj;
-}
-
-Fqdn _fqdnDeserializeWeb(IsarCollection<Fqdn> collection, Object jsObj) {
-  final object = Fqdn();
-  object.fqdn = IsarNative.jsObjectGet(jsObj, 'fqdn') ?? '';
-  object.id =
-      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int);
-  _fqdnAttachLinks(
-      collection,
-      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
-      object);
-  return object;
-}
-
-P _fqdnDeserializePropWeb<P>(Object jsObj, String propertyName) {
-  switch (propertyName) {
-    case 'fqdn':
-      return (IsarNative.jsObjectGet(jsObj, 'fqdn') ?? '') as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ??
-          (double.negativeInfinity as int)) as P;
-    default:
-      throw 'Illegal propertyName';
-  }
-}
-
-void _fqdnAttachLinks(IsarCollection<dynamic> col, int id, Fqdn object) {
-  object.service.attach(col, col.isar.services, 'service', id);
-}
-
-extension FqdnQueryWhereSort on QueryBuilder<Fqdn, Fqdn, QWhere> {
-  QueryBuilder<Fqdn, Fqdn, QAfterWhere> anyId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(const IdWhereClause.any());
-    });
-  }
-}
-
-extension FqdnQueryWhere on QueryBuilder<Fqdn, Fqdn, QWhereClause> {
-  QueryBuilder<Fqdn, Fqdn, QAfterWhereClause> idEqualTo(int id) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        includeLower: true,
-        upper: id,
-        includeUpper: true,
-      ));
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterWhereClause> idNotEqualTo(int id) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(
-              IdWhereClause.lessThan(upper: id, includeUpper: false),
-            )
-            .addWhereClause(
-              IdWhereClause.greaterThan(lower: id, includeLower: false),
-            );
-      } else {
-        return query
-            .addWhereClause(
-              IdWhereClause.greaterThan(lower: id, includeLower: false),
-            )
-            .addWhereClause(
-              IdWhereClause.lessThan(upper: id, includeUpper: false),
-            );
-      }
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterWhereClause> idGreaterThan(int id,
-      {bool include = false}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        IdWhereClause.greaterThan(lower: id, includeLower: include),
-      );
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterWhereClause> idLessThan(int id,
-      {bool include = false}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        IdWhereClause.lessThan(upper: id, includeUpper: include),
-      );
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterWhereClause> idBetween(
-    int lowerId,
-    int upperId, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
-        includeLower: includeLower,
-        upper: upperId,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-}
-
-extension FqdnQueryFilter on QueryBuilder<Fqdn, Fqdn, QFilterCondition> {
-  QueryBuilder<Fqdn, Fqdn, QAfterFilterCondition> fqdnEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'fqdn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterFilterCondition> fqdnGreaterThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: 'fqdn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterFilterCondition> fqdnLessThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: 'fqdn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterFilterCondition> fqdnBetween(
-    String lower,
-    String upper, {
-    bool caseSensitive = true,
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: 'fqdn',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterFilterCondition> fqdnStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'fqdn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterFilterCondition> fqdnEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'fqdn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterFilterCondition> fqdnContains(String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: 'fqdn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterFilterCondition> fqdnMatches(String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: 'fqdn',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterFilterCondition> idEqualTo(int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'id',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterFilterCondition> idGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: 'id',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterFilterCondition> idLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: 'id',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterFilterCondition> idBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: 'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-}
-
-extension FqdnQueryLinks on QueryBuilder<Fqdn, Fqdn, QFilterCondition> {
-  QueryBuilder<Fqdn, Fqdn, QAfterFilterCondition> service(
-      FilterQuery<Service> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.link(
-        query.collection.isar.services,
-        q,
-        'service',
-      );
-    });
-  }
-}
-
-extension FqdnQueryWhereSortBy on QueryBuilder<Fqdn, Fqdn, QSortBy> {
-  QueryBuilder<Fqdn, Fqdn, QAfterSortBy> sortByFqdn() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('fqdn', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterSortBy> sortByFqdnDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('fqdn', Sort.desc);
-    });
-  }
-}
-
-extension FqdnQueryWhereSortThenBy on QueryBuilder<Fqdn, Fqdn, QSortThenBy> {
-  QueryBuilder<Fqdn, Fqdn, QAfterSortBy> thenByFqdn() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('fqdn', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterSortBy> thenByFqdnDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('fqdn', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterSortBy> thenById() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Fqdn, Fqdn, QAfterSortBy> thenByIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.desc);
-    });
-  }
-}
-
-extension FqdnQueryWhereDistinct on QueryBuilder<Fqdn, Fqdn, QDistinct> {
-  QueryBuilder<Fqdn, Fqdn, QDistinct> distinctByFqdn(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('fqdn', caseSensitive: caseSensitive);
-    });
-  }
-}
-
-extension FqdnQueryProperty on QueryBuilder<Fqdn, Fqdn, QQueryProperty> {
-  QueryBuilder<Fqdn, String, QQueryOperations> fqdnProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('fqdn');
-    });
-  }
-
-  QueryBuilder<Fqdn, int, QQueryOperations> idProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('id');
-    });
-  }
-}
-
-// coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names,
-// constant_identifier_names, invalid_use_of_protected_member,
-// unnecessary_cast, unused_local_variable,
-// no_leading_underscores_for_local_identifiers,
-// inference_failure_on_function_invocation, prefer_const_constructors
-
-extension GetAccountCollection on Isar {
-  IsarCollection<Account> get accounts => getCollection();
-}
-
-const AccountSchema = CollectionSchema(
-  name: 'Account',
-  schema:
-      '{"name":"Account","idName":"id","properties":[{"name":"password","type":"String"},{"name":"totp","type":"String"},{"name":"username","type":"String"}],"indexes":[],"links":[{"name":"service","target":"Service"}]}',
-  idName: 'id',
-  propertyIds: {'password': 0, 'totp': 1, 'username': 2},
-  listProperties: {},
-  indexIds: {},
-  indexValueTypes: {},
-  linkIds: {'service': 0, 'fields': 1},
-  backlinkLinkNames: {'fields': 'account'},
-  getId: _accountGetId,
-  setId: _accountSetId,
-  getLinks: _accountGetLinks,
-  attachLinks: _accountAttachLinks,
-  serializeNative: _accountSerializeNative,
-  deserializeNative: _accountDeserializeNative,
-  deserializePropNative: _accountDeserializePropNative,
-  serializeWeb: _accountSerializeWeb,
-  deserializeWeb: _accountDeserializeWeb,
-  deserializePropWeb: _accountDeserializePropWeb,
-  version: 4,
-);
-
-int? _accountGetId(Account object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
-  }
-}
-
-void _accountSetId(Account object, int id) {
-  object.id = id;
-}
-
-List<IsarLinkBase<dynamic>> _accountGetLinks(Account object) {
-  return [object.service, object.fields];
-}
-
-void _accountSerializeNative(
-    IsarCollection<Account> collection,
-    IsarCObject cObj,
-    Account object,
-    int staticSize,
-    List<int> offsets,
-    AdapterAlloc alloc) {
-  final password$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.password);
-  final totp$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.totp);
-  final username$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.username);
-  final size = (staticSize +
-      (password$Bytes.length) +
-      (totp$Bytes.length) +
-      (username$Bytes.length)) as int;
-  cObj.buffer = alloc(size);
-  cObj.buffer_length = size;
-
-  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], password$Bytes);
-  writer.writeBytes(offsets[1], totp$Bytes);
-  writer.writeBytes(offsets[2], username$Bytes);
-}
-
-Account _accountDeserializeNative(IsarCollection<Account> collection, int id,
-    IsarBinaryReader reader, List<int> offsets) {
-  final object = Account();
-  object.id = id;
-  object.password = reader.readString(offsets[0]);
-  object.totp = reader.readString(offsets[1]);
-  object.username = reader.readString(offsets[2]);
-  _accountAttachLinks(collection, id, object);
-  return object;
-}
-
-P _accountDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
-    case 0:
-      return (reader.readString(offset)) as P;
-    case 1:
-      return (reader.readString(offset)) as P;
-    case 2:
-      return (reader.readString(offset)) as P;
-    default:
-      throw 'Illegal propertyIndex';
-  }
-}
-
-Object _accountSerializeWeb(
-    IsarCollection<Account> collection, Account object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'password', object.password);
-  IsarNative.jsObjectSet(jsObj, 'totp', object.totp);
-  IsarNative.jsObjectSet(jsObj, 'username', object.username);
-  return jsObj;
-}
-
-Account _accountDeserializeWeb(
-    IsarCollection<Account> collection, Object jsObj) {
-  final object = Account();
-  object.id =
-      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int);
-  object.password = IsarNative.jsObjectGet(jsObj, 'password') ?? '';
-  object.totp = IsarNative.jsObjectGet(jsObj, 'totp') ?? '';
-  object.username = IsarNative.jsObjectGet(jsObj, 'username') ?? '';
-  _accountAttachLinks(
-      collection,
-      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
-      object);
-  return object;
-}
-
-P _accountDeserializePropWeb<P>(Object jsObj, String propertyName) {
-  switch (propertyName) {
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ??
-          (double.negativeInfinity as int)) as P;
-    case 'password':
-      return (IsarNative.jsObjectGet(jsObj, 'password') ?? '') as P;
-    case 'totp':
-      return (IsarNative.jsObjectGet(jsObj, 'totp') ?? '') as P;
-    case 'username':
-      return (IsarNative.jsObjectGet(jsObj, 'username') ?? '') as P;
-    default:
-      throw 'Illegal propertyName';
-  }
-}
-
-void _accountAttachLinks(IsarCollection<dynamic> col, int id, Account object) {
-  object.service.attach(col, col.isar.services, 'service', id);
-  object.fields.attach(col, col.isar.fields, 'fields', id);
-}
-
-extension AccountQueryWhereSort on QueryBuilder<Account, Account, QWhere> {
-  QueryBuilder<Account, Account, QAfterWhere> anyId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(const IdWhereClause.any());
-    });
-  }
-}
-
-extension AccountQueryWhere on QueryBuilder<Account, Account, QWhereClause> {
-  QueryBuilder<Account, Account, QAfterWhereClause> idEqualTo(int id) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        includeLower: true,
-        upper: id,
-        includeUpper: true,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterWhereClause> idNotEqualTo(int id) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(
-              IdWhereClause.lessThan(upper: id, includeUpper: false),
-            )
-            .addWhereClause(
-              IdWhereClause.greaterThan(lower: id, includeLower: false),
-            );
-      } else {
-        return query
-            .addWhereClause(
-              IdWhereClause.greaterThan(lower: id, includeLower: false),
-            )
-            .addWhereClause(
-              IdWhereClause.lessThan(upper: id, includeUpper: false),
-            );
-      }
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterWhereClause> idGreaterThan(int id,
-      {bool include = false}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        IdWhereClause.greaterThan(lower: id, includeLower: include),
-      );
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterWhereClause> idLessThan(int id,
-      {bool include = false}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        IdWhereClause.lessThan(upper: id, includeUpper: include),
-      );
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterWhereClause> idBetween(
-    int lowerId,
-    int upperId, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
-        includeLower: includeLower,
-        upper: upperId,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-}
-
-extension AccountQueryFilter
-    on QueryBuilder<Account, Account, QFilterCondition> {
-  QueryBuilder<Account, Account, QAfterFilterCondition> idEqualTo(int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'id',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> idGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: 'id',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> idLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: 'id',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> idBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: 'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> passwordEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'password',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> passwordGreaterThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: 'password',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> passwordLessThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: 'password',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> passwordBetween(
-    String lower,
-    String upper, {
-    bool caseSensitive = true,
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: 'password',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> passwordStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'password',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> passwordEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'password',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> passwordContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: 'password',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> passwordMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: 'password',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> totpEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'totp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> totpGreaterThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: 'totp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> totpLessThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: 'totp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> totpBetween(
-    String lower,
-    String upper, {
-    bool caseSensitive = true,
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: 'totp',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> totpStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'totp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> totpEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'totp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> totpContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: 'totp',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> totpMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: 'totp',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> usernameEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'username',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> usernameGreaterThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: 'username',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> usernameLessThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: 'username',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> usernameBetween(
-    String lower,
-    String upper, {
-    bool caseSensitive = true,
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: 'username',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> usernameStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'username',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> usernameEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'username',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> usernameContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: 'username',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> usernameMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: 'username',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-}
-
-extension AccountQueryLinks
-    on QueryBuilder<Account, Account, QFilterCondition> {
-  QueryBuilder<Account, Account, QAfterFilterCondition> service(
-      FilterQuery<Service> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.link(
-        query.collection.isar.services,
-        q,
-        'service',
-      );
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterFilterCondition> fields(
-      FilterQuery<Field> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.link(
-        query.collection.isar.fields,
-        q,
-        'fields',
-      );
-    });
-  }
-}
-
-extension AccountQueryWhereSortBy on QueryBuilder<Account, Account, QSortBy> {
-  QueryBuilder<Account, Account, QAfterSortBy> sortByPassword() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('password', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterSortBy> sortByPasswordDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('password', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterSortBy> sortByTotp() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('totp', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterSortBy> sortByTotpDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('totp', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterSortBy> sortByUsername() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('username', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterSortBy> sortByUsernameDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('username', Sort.desc);
-    });
-  }
-}
-
-extension AccountQueryWhereSortThenBy
-    on QueryBuilder<Account, Account, QSortThenBy> {
-  QueryBuilder<Account, Account, QAfterSortBy> thenById() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterSortBy> thenByIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterSortBy> thenByPassword() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('password', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterSortBy> thenByPasswordDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('password', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterSortBy> thenByTotp() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('totp', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterSortBy> thenByTotpDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('totp', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterSortBy> thenByUsername() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('username', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Account, Account, QAfterSortBy> thenByUsernameDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('username', Sort.desc);
-    });
-  }
-}
-
-extension AccountQueryWhereDistinct
-    on QueryBuilder<Account, Account, QDistinct> {
-  QueryBuilder<Account, Account, QDistinct> distinctByPassword(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('password', caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<Account, Account, QDistinct> distinctByTotp(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('totp', caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<Account, Account, QDistinct> distinctByUsername(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('username', caseSensitive: caseSensitive);
-    });
-  }
-}
-
-extension AccountQueryProperty
-    on QueryBuilder<Account, Account, QQueryProperty> {
-  QueryBuilder<Account, int, QQueryOperations> idProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('id');
-    });
-  }
-
-  QueryBuilder<Account, String, QQueryOperations> passwordProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('password');
-    });
-  }
-
-  QueryBuilder<Account, String, QQueryOperations> totpProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('totp');
-    });
-  }
-
-  QueryBuilder<Account, String, QQueryOperations> usernameProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('username');
-    });
-  }
-}
-
-// coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names,
-// constant_identifier_names, invalid_use_of_protected_member,
-// unnecessary_cast, unused_local_variable,
-// no_leading_underscores_for_local_identifiers,
-// inference_failure_on_function_invocation, prefer_const_constructors
-
-extension GetFieldCollection on Isar {
-  IsarCollection<Field> get fields => getCollection();
-}
-
-const FieldSchema = CollectionSchema(
-  name: 'Field',
-  schema:
-      '{"name":"Field","idName":"id","properties":[{"name":"canObscure","type":"Bool"},{"name":"key","type":"String"},{"name":"value","type":"String"}],"indexes":[],"links":[{"name":"account","target":"Account"}]}',
-  idName: 'id',
-  propertyIds: {'canObscure': 0, 'key': 1, 'value': 2},
-  listProperties: {},
-  indexIds: {},
-  indexValueTypes: {},
-  linkIds: {'account': 0},
-  backlinkLinkNames: {},
-  getId: _fieldGetId,
-  setId: _fieldSetId,
-  getLinks: _fieldGetLinks,
-  attachLinks: _fieldAttachLinks,
-  serializeNative: _fieldSerializeNative,
-  deserializeNative: _fieldDeserializeNative,
-  deserializePropNative: _fieldDeserializePropNative,
-  serializeWeb: _fieldSerializeWeb,
-  deserializeWeb: _fieldDeserializeWeb,
-  deserializePropWeb: _fieldDeserializePropWeb,
-  version: 4,
-);
-
-int? _fieldGetId(Field object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
-  }
-}
-
-void _fieldSetId(Field object, int id) {
-  object.id = id;
-}
-
-List<IsarLinkBase<dynamic>> _fieldGetLinks(Field object) {
-  return [object.account];
-}
-
-void _fieldSerializeNative(IsarCollection<Field> collection, IsarCObject cObj,
-    Field object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
-  final key$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.key);
-  final value$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.value);
-  final size = (staticSize + (key$Bytes.length) + (value$Bytes.length)) as int;
-  cObj.buffer = alloc(size);
-  cObj.buffer_length = size;
-
-  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBool(offsets[0], object.canObscure);
-  writer.writeBytes(offsets[1], key$Bytes);
-  writer.writeBytes(offsets[2], value$Bytes);
-}
-
-Field _fieldDeserializeNative(IsarCollection<Field> collection, int id,
-    IsarBinaryReader reader, List<int> offsets) {
-  final object = Field();
-  object.canObscure = reader.readBool(offsets[0]);
-  object.id = id;
-  object.key = reader.readString(offsets[1]);
-  object.value = reader.readString(offsets[2]);
-  _fieldAttachLinks(collection, id, object);
-  return object;
-}
-
-P _fieldDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
-    case 0:
-      return (reader.readBool(offset)) as P;
-    case 1:
-      return (reader.readString(offset)) as P;
-    case 2:
-      return (reader.readString(offset)) as P;
-    default:
-      throw 'Illegal propertyIndex';
-  }
-}
-
-Object _fieldSerializeWeb(IsarCollection<Field> collection, Field object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'canObscure', object.canObscure);
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'key', object.key);
-  IsarNative.jsObjectSet(jsObj, 'value', object.value);
-  return jsObj;
-}
-
-Field _fieldDeserializeWeb(IsarCollection<Field> collection, Object jsObj) {
-  final object = Field();
-  object.canObscure = IsarNative.jsObjectGet(jsObj, 'canObscure') ?? false;
-  object.id =
-      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int);
-  object.key = IsarNative.jsObjectGet(jsObj, 'key') ?? '';
-  object.value = IsarNative.jsObjectGet(jsObj, 'value') ?? '';
-  _fieldAttachLinks(
-      collection,
-      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
-      object);
-  return object;
-}
-
-P _fieldDeserializePropWeb<P>(Object jsObj, String propertyName) {
-  switch (propertyName) {
-    case 'canObscure':
-      return (IsarNative.jsObjectGet(jsObj, 'canObscure') ?? false) as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id') ??
-          (double.negativeInfinity as int)) as P;
-    case 'key':
-      return (IsarNative.jsObjectGet(jsObj, 'key') ?? '') as P;
-    case 'value':
-      return (IsarNative.jsObjectGet(jsObj, 'value') ?? '') as P;
-    default:
-      throw 'Illegal propertyName';
-  }
-}
-
-void _fieldAttachLinks(IsarCollection<dynamic> col, int id, Field object) {
-  object.account.attach(col, col.isar.accounts, 'account', id);
-}
-
-extension FieldQueryWhereSort on QueryBuilder<Field, Field, QWhere> {
-  QueryBuilder<Field, Field, QAfterWhere> anyId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(const IdWhereClause.any());
-    });
-  }
-}
-
-extension FieldQueryWhere on QueryBuilder<Field, Field, QWhereClause> {
-  QueryBuilder<Field, Field, QAfterWhereClause> idEqualTo(int id) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        includeLower: true,
-        upper: id,
-        includeUpper: true,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterWhereClause> idNotEqualTo(int id) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(
-              IdWhereClause.lessThan(upper: id, includeUpper: false),
-            )
-            .addWhereClause(
-              IdWhereClause.greaterThan(lower: id, includeLower: false),
-            );
-      } else {
-        return query
-            .addWhereClause(
-              IdWhereClause.greaterThan(lower: id, includeLower: false),
-            )
-            .addWhereClause(
-              IdWhereClause.lessThan(upper: id, includeUpper: false),
-            );
-      }
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterWhereClause> idGreaterThan(int id,
-      {bool include = false}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        IdWhereClause.greaterThan(lower: id, includeLower: include),
-      );
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterWhereClause> idLessThan(int id,
-      {bool include = false}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        IdWhereClause.lessThan(upper: id, includeUpper: include),
-      );
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterWhereClause> idBetween(
-    int lowerId,
-    int upperId, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
-        includeLower: includeLower,
-        upper: upperId,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-}
-
-extension FieldQueryFilter on QueryBuilder<Field, Field, QFilterCondition> {
-  QueryBuilder<Field, Field, QAfterFilterCondition> canObscureEqualTo(
-      bool value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'canObscure',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> idEqualTo(int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'id',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> idGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: 'id',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> idLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: 'id',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> idBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: 'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> keyEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> keyGreaterThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: 'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> keyLessThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: 'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> keyBetween(
-    String lower,
-    String upper, {
-    bool caseSensitive = true,
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: 'key',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> keyStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> keyEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> keyContains(String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: 'key',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> keyMatches(String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: 'key',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> valueEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: 'value',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> valueGreaterThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: 'value',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> valueLessThan(
-    String value, {
-    bool caseSensitive = true,
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: 'value',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> valueBetween(
-    String lower,
-    String upper, {
-    bool caseSensitive = true,
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: 'value',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> valueStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: 'value',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> valueEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: 'value',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> valueContains(String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: 'value',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterFilterCondition> valueMatches(String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: 'value',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-}
-
-extension FieldQueryLinks on QueryBuilder<Field, Field, QFilterCondition> {
-  QueryBuilder<Field, Field, QAfterFilterCondition> account(
-      FilterQuery<Account> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.link(
-        query.collection.isar.accounts,
-        q,
-        'account',
-      );
-    });
-  }
-}
-
-extension FieldQueryWhereSortBy on QueryBuilder<Field, Field, QSortBy> {
-  QueryBuilder<Field, Field, QAfterSortBy> sortByCanObscure() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('canObscure', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterSortBy> sortByCanObscureDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('canObscure', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterSortBy> sortByKey() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('key', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterSortBy> sortByKeyDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('key', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterSortBy> sortByValue() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('value', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterSortBy> sortByValueDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('value', Sort.desc);
-    });
-  }
-}
-
-extension FieldQueryWhereSortThenBy on QueryBuilder<Field, Field, QSortThenBy> {
-  QueryBuilder<Field, Field, QAfterSortBy> thenByCanObscure() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('canObscure', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterSortBy> thenByCanObscureDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('canObscure', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterSortBy> thenById() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterSortBy> thenByIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('id', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterSortBy> thenByKey() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('key', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterSortBy> thenByKeyDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('key', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterSortBy> thenByValue() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('value', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Field, Field, QAfterSortBy> thenByValueDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy('value', Sort.desc);
-    });
-  }
-}
-
-extension FieldQueryWhereDistinct on QueryBuilder<Field, Field, QDistinct> {
-  QueryBuilder<Field, Field, QDistinct> distinctByCanObscure() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('canObscure');
-    });
-  }
-
-  QueryBuilder<Field, Field, QDistinct> distinctByKey(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('key', caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<Field, Field, QDistinct> distinctByValue(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy('value', caseSensitive: caseSensitive);
-    });
-  }
-}
-
-extension FieldQueryProperty on QueryBuilder<Field, Field, QQueryProperty> {
-  QueryBuilder<Field, bool, QQueryOperations> canObscureProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('canObscure');
-    });
-  }
-
-  QueryBuilder<Field, int, QQueryOperations> idProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('id');
-    });
-  }
-
-  QueryBuilder<Field, String, QQueryOperations> keyProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('key');
-    });
-  }
-
-  QueryBuilder<Field, String, QQueryOperations> valueProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName('value');
-    });
-  }
-}
-
-// coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names,
-// constant_identifier_names, invalid_use_of_protected_member,
-// unnecessary_cast, unused_local_variable,
-// no_leading_underscores_for_local_identifiers,
-// inference_failure_on_function_invocation, prefer_const_constructors
-
 extension GetServiceCollection on Isar {
   IsarCollection<Service> get services => getCollection();
 }
@@ -2444,7 +573,6 @@ const ServiceSchema = CollectionSchema(
   linkIds: {'category': 0, 'accounts': 1},
   backlinkLinkNames: {'accounts': 'service'},
   getId: _serviceGetId,
-  setId: _serviceSetId,
   getLinks: _serviceGetLinks,
   attachLinks: _serviceAttachLinks,
   serializeNative: _serviceSerializeNative,
@@ -2462,10 +590,6 @@ int? _serviceGetId(Service object) {
   } else {
     return object.id;
   }
-}
-
-void _serviceSetId(Service object, int id) {
-  object.id = id;
 }
 
 List<IsarLinkBase<dynamic>> _serviceGetLinks(Service object) {
@@ -2505,7 +629,6 @@ void _serviceSerializeNative(
 Service _serviceDeserializeNative(IsarCollection<Service> collection, int id,
     IsarBinaryReader reader, List<int> offsets) {
   final object = Service();
-  object.id = id;
   object.memo = reader.readString(offsets[0]);
   object.name = reader.readString(offsets[1]);
   object.urls = reader.readStringList(offsets[2]) ?? [];
@@ -2542,8 +665,6 @@ Object _serviceSerializeWeb(
 Service _serviceDeserializeWeb(
     IsarCollection<Service> collection, Object jsObj) {
   final object = Service();
-  object.id =
-      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int);
   object.memo = IsarNative.jsObjectGet(jsObj, 'memo') ?? '';
   object.name = IsarNative.jsObjectGet(jsObj, 'name') ?? '';
   object.urls = (IsarNative.jsObjectGet(jsObj, 'urls') as List?)
@@ -3243,6 +1364,1417 @@ extension ServiceQueryProperty
   QueryBuilder<Service, List<String>, QQueryOperations> urlsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName('urls');
+    });
+  }
+}
+
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names,
+// constant_identifier_names, invalid_use_of_protected_member,
+// unnecessary_cast, unused_local_variable,
+// no_leading_underscores_for_local_identifiers,
+// inference_failure_on_function_invocation, prefer_const_constructors
+
+extension GetAccountCollection on Isar {
+  IsarCollection<Account> get accounts => getCollection();
+}
+
+const AccountSchema = CollectionSchema(
+  name: 'Account',
+  schema:
+      '{"name":"Account","idName":"id","properties":[{"name":"password","type":"String"},{"name":"totp","type":"String"},{"name":"username","type":"String"}],"indexes":[],"links":[{"name":"service","target":"Service"}]}',
+  idName: 'id',
+  propertyIds: {'password': 0, 'totp': 1, 'username': 2},
+  listProperties: {},
+  indexIds: {},
+  indexValueTypes: {},
+  linkIds: {'service': 0, 'fields': 1},
+  backlinkLinkNames: {'fields': 'account'},
+  getId: _accountGetId,
+  getLinks: _accountGetLinks,
+  attachLinks: _accountAttachLinks,
+  serializeNative: _accountSerializeNative,
+  deserializeNative: _accountDeserializeNative,
+  deserializePropNative: _accountDeserializePropNative,
+  serializeWeb: _accountSerializeWeb,
+  deserializeWeb: _accountDeserializeWeb,
+  deserializePropWeb: _accountDeserializePropWeb,
+  version: 4,
+);
+
+int? _accountGetId(Account object) {
+  if (object.id == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.id;
+  }
+}
+
+List<IsarLinkBase<dynamic>> _accountGetLinks(Account object) {
+  return [object.service, object.fields];
+}
+
+void _accountSerializeNative(
+    IsarCollection<Account> collection,
+    IsarCObject cObj,
+    Account object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  final password$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.password);
+  final totp$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.totp);
+  final username$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.username);
+  final size = (staticSize +
+      (password$Bytes.length) +
+      (totp$Bytes.length) +
+      (username$Bytes.length)) as int;
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeBytes(offsets[0], password$Bytes);
+  writer.writeBytes(offsets[1], totp$Bytes);
+  writer.writeBytes(offsets[2], username$Bytes);
+}
+
+Account _accountDeserializeNative(IsarCollection<Account> collection, int id,
+    IsarBinaryReader reader, List<int> offsets) {
+  final object = Account();
+  object.password = reader.readString(offsets[0]);
+  object.totp = reader.readString(offsets[1]);
+  object.username = reader.readString(offsets[2]);
+  _accountAttachLinks(collection, id, object);
+  return object;
+}
+
+P _accountDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (reader.readString(offset)) as P;
+    case 1:
+      return (reader.readString(offset)) as P;
+    case 2:
+      return (reader.readString(offset)) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+Object _accountSerializeWeb(
+    IsarCollection<Account> collection, Account object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(jsObj, 'id', object.id);
+  IsarNative.jsObjectSet(jsObj, 'password', object.password);
+  IsarNative.jsObjectSet(jsObj, 'totp', object.totp);
+  IsarNative.jsObjectSet(jsObj, 'username', object.username);
+  return jsObj;
+}
+
+Account _accountDeserializeWeb(
+    IsarCollection<Account> collection, Object jsObj) {
+  final object = Account();
+  object.password = IsarNative.jsObjectGet(jsObj, 'password') ?? '';
+  object.totp = IsarNative.jsObjectGet(jsObj, 'totp') ?? '';
+  object.username = IsarNative.jsObjectGet(jsObj, 'username') ?? '';
+  _accountAttachLinks(
+      collection,
+      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
+      object);
+  return object;
+}
+
+P _accountDeserializePropWeb<P>(Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'id':
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
+    case 'password':
+      return (IsarNative.jsObjectGet(jsObj, 'password') ?? '') as P;
+    case 'totp':
+      return (IsarNative.jsObjectGet(jsObj, 'totp') ?? '') as P;
+    case 'username':
+      return (IsarNative.jsObjectGet(jsObj, 'username') ?? '') as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _accountAttachLinks(IsarCollection<dynamic> col, int id, Account object) {
+  object.service.attach(col, col.isar.services, 'service', id);
+  object.fields.attach(col, col.isar.fields, 'fields', id);
+}
+
+extension AccountQueryWhereSort on QueryBuilder<Account, Account, QWhere> {
+  QueryBuilder<Account, Account, QAfterWhere> anyId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
+  }
+}
+
+extension AccountQueryWhere on QueryBuilder<Account, Account, QWhereClause> {
+  QueryBuilder<Account, Account, QAfterWhereClause> idEqualTo(int id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        includeLower: true,
+        upper: id,
+        includeUpper: true,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterWhereClause> idNotEqualTo(int id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterWhereClause> idGreaterThan(int id,
+      {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
+      );
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterWhereClause> idLessThan(int id,
+      {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
+      );
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterWhereClause> idBetween(
+    int lowerId,
+    int upperId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+}
+
+extension AccountQueryFilter
+    on QueryBuilder<Account, Account, QFilterCondition> {
+  QueryBuilder<Account, Account, QAfterFilterCondition> idEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> idGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> idLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> idBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> passwordEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'password',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> passwordGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'password',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> passwordLessThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'password',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> passwordBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'password',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> passwordStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: 'password',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> passwordEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: 'password',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> passwordContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: 'password',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> passwordMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: 'password',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> totpEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'totp',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> totpGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'totp',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> totpLessThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'totp',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> totpBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'totp',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> totpStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: 'totp',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> totpEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: 'totp',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> totpContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: 'totp',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> totpMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: 'totp',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> usernameEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'username',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> usernameGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'username',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> usernameLessThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'username',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> usernameBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'username',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> usernameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: 'username',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> usernameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: 'username',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> usernameContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: 'username',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> usernameMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: 'username',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+}
+
+extension AccountQueryLinks
+    on QueryBuilder<Account, Account, QFilterCondition> {
+  QueryBuilder<Account, Account, QAfterFilterCondition> service(
+      FilterQuery<Service> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(
+        query.collection.isar.services,
+        q,
+        'service',
+      );
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> fields(
+      FilterQuery<Field> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(
+        query.collection.isar.fields,
+        q,
+        'fields',
+      );
+    });
+  }
+}
+
+extension AccountQueryWhereSortBy on QueryBuilder<Account, Account, QSortBy> {
+  QueryBuilder<Account, Account, QAfterSortBy> sortByPassword() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('password', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterSortBy> sortByPasswordDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('password', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterSortBy> sortByTotp() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('totp', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterSortBy> sortByTotpDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('totp', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterSortBy> sortByUsername() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('username', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterSortBy> sortByUsernameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('username', Sort.desc);
+    });
+  }
+}
+
+extension AccountQueryWhereSortThenBy
+    on QueryBuilder<Account, Account, QSortThenBy> {
+  QueryBuilder<Account, Account, QAfterSortBy> thenById() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('id', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterSortBy> thenByIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('id', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterSortBy> thenByPassword() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('password', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterSortBy> thenByPasswordDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('password', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterSortBy> thenByTotp() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('totp', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterSortBy> thenByTotpDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('totp', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterSortBy> thenByUsername() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('username', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterSortBy> thenByUsernameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('username', Sort.desc);
+    });
+  }
+}
+
+extension AccountQueryWhereDistinct
+    on QueryBuilder<Account, Account, QDistinct> {
+  QueryBuilder<Account, Account, QDistinct> distinctByPassword(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('password', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<Account, Account, QDistinct> distinctByTotp(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('totp', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<Account, Account, QDistinct> distinctByUsername(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('username', caseSensitive: caseSensitive);
+    });
+  }
+}
+
+extension AccountQueryProperty
+    on QueryBuilder<Account, Account, QQueryProperty> {
+  QueryBuilder<Account, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('id');
+    });
+  }
+
+  QueryBuilder<Account, String, QQueryOperations> passwordProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('password');
+    });
+  }
+
+  QueryBuilder<Account, String, QQueryOperations> totpProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('totp');
+    });
+  }
+
+  QueryBuilder<Account, String, QQueryOperations> usernameProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('username');
+    });
+  }
+}
+
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names,
+// constant_identifier_names, invalid_use_of_protected_member,
+// unnecessary_cast, unused_local_variable,
+// no_leading_underscores_for_local_identifiers,
+// inference_failure_on_function_invocation, prefer_const_constructors
+
+extension GetFieldCollection on Isar {
+  IsarCollection<Field> get fields => getCollection();
+}
+
+const FieldSchema = CollectionSchema(
+  name: 'Field',
+  schema:
+      '{"name":"Field","idName":"id","properties":[{"name":"canObscure","type":"Bool"},{"name":"key","type":"String"},{"name":"value","type":"String"}],"indexes":[],"links":[{"name":"account","target":"Account"}]}',
+  idName: 'id',
+  propertyIds: {'canObscure': 0, 'key': 1, 'value': 2},
+  listProperties: {},
+  indexIds: {},
+  indexValueTypes: {},
+  linkIds: {'account': 0},
+  backlinkLinkNames: {},
+  getId: _fieldGetId,
+  getLinks: _fieldGetLinks,
+  attachLinks: _fieldAttachLinks,
+  serializeNative: _fieldSerializeNative,
+  deserializeNative: _fieldDeserializeNative,
+  deserializePropNative: _fieldDeserializePropNative,
+  serializeWeb: _fieldSerializeWeb,
+  deserializeWeb: _fieldDeserializeWeb,
+  deserializePropWeb: _fieldDeserializePropWeb,
+  version: 4,
+);
+
+int? _fieldGetId(Field object) {
+  if (object.id == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.id;
+  }
+}
+
+List<IsarLinkBase<dynamic>> _fieldGetLinks(Field object) {
+  return [object.account];
+}
+
+void _fieldSerializeNative(IsarCollection<Field> collection, IsarCObject cObj,
+    Field object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
+  final key$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.key);
+  final value$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.value);
+  final size = (staticSize + (key$Bytes.length) + (value$Bytes.length)) as int;
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeBool(offsets[0], object.canObscure);
+  writer.writeBytes(offsets[1], key$Bytes);
+  writer.writeBytes(offsets[2], value$Bytes);
+}
+
+Field _fieldDeserializeNative(IsarCollection<Field> collection, int id,
+    IsarBinaryReader reader, List<int> offsets) {
+  final object = Field();
+  object.canObscure = reader.readBool(offsets[0]);
+  object.key = reader.readString(offsets[1]);
+  object.value = reader.readString(offsets[2]);
+  _fieldAttachLinks(collection, id, object);
+  return object;
+}
+
+P _fieldDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (reader.readBool(offset)) as P;
+    case 1:
+      return (reader.readString(offset)) as P;
+    case 2:
+      return (reader.readString(offset)) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+Object _fieldSerializeWeb(IsarCollection<Field> collection, Field object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(jsObj, 'canObscure', object.canObscure);
+  IsarNative.jsObjectSet(jsObj, 'id', object.id);
+  IsarNative.jsObjectSet(jsObj, 'key', object.key);
+  IsarNative.jsObjectSet(jsObj, 'value', object.value);
+  return jsObj;
+}
+
+Field _fieldDeserializeWeb(IsarCollection<Field> collection, Object jsObj) {
+  final object = Field();
+  object.canObscure = IsarNative.jsObjectGet(jsObj, 'canObscure') ?? false;
+  object.key = IsarNative.jsObjectGet(jsObj, 'key') ?? '';
+  object.value = IsarNative.jsObjectGet(jsObj, 'value') ?? '';
+  _fieldAttachLinks(
+      collection,
+      IsarNative.jsObjectGet(jsObj, 'id') ?? (double.negativeInfinity as int),
+      object);
+  return object;
+}
+
+P _fieldDeserializePropWeb<P>(Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'canObscure':
+      return (IsarNative.jsObjectGet(jsObj, 'canObscure') ?? false) as P;
+    case 'id':
+      return (IsarNative.jsObjectGet(jsObj, 'id') ??
+          (double.negativeInfinity as int)) as P;
+    case 'key':
+      return (IsarNative.jsObjectGet(jsObj, 'key') ?? '') as P;
+    case 'value':
+      return (IsarNative.jsObjectGet(jsObj, 'value') ?? '') as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _fieldAttachLinks(IsarCollection<dynamic> col, int id, Field object) {
+  object.account.attach(col, col.isar.accounts, 'account', id);
+}
+
+extension FieldQueryWhereSort on QueryBuilder<Field, Field, QWhere> {
+  QueryBuilder<Field, Field, QAfterWhere> anyId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
+  }
+}
+
+extension FieldQueryWhere on QueryBuilder<Field, Field, QWhereClause> {
+  QueryBuilder<Field, Field, QAfterWhereClause> idEqualTo(int id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        includeLower: true,
+        upper: id,
+        includeUpper: true,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterWhereClause> idNotEqualTo(int id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterWhereClause> idGreaterThan(int id,
+      {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
+      );
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterWhereClause> idLessThan(int id,
+      {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
+      );
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterWhereClause> idBetween(
+    int lowerId,
+    int upperId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+}
+
+extension FieldQueryFilter on QueryBuilder<Field, Field, QFilterCondition> {
+  QueryBuilder<Field, Field, QAfterFilterCondition> canObscureEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'canObscure',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> idEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> idGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> idLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> idBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> keyEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> keyGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> keyLessThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> keyBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'key',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> keyStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: 'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> keyEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: 'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> keyContains(String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: 'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> keyMatches(String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: 'key',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> valueEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: 'value',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> valueGreaterThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: 'value',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> valueLessThan(
+    String value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: 'value',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> valueBetween(
+    String lower,
+    String upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: 'value',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> valueStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: 'value',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> valueEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: 'value',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> valueContains(String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: 'value',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> valueMatches(String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: 'value',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+}
+
+extension FieldQueryLinks on QueryBuilder<Field, Field, QFilterCondition> {
+  QueryBuilder<Field, Field, QAfterFilterCondition> account(
+      FilterQuery<Account> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(
+        query.collection.isar.accounts,
+        q,
+        'account',
+      );
+    });
+  }
+}
+
+extension FieldQueryWhereSortBy on QueryBuilder<Field, Field, QSortBy> {
+  QueryBuilder<Field, Field, QAfterSortBy> sortByCanObscure() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('canObscure', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterSortBy> sortByCanObscureDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('canObscure', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterSortBy> sortByKey() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('key', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterSortBy> sortByKeyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('key', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterSortBy> sortByValue() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('value', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterSortBy> sortByValueDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('value', Sort.desc);
+    });
+  }
+}
+
+extension FieldQueryWhereSortThenBy on QueryBuilder<Field, Field, QSortThenBy> {
+  QueryBuilder<Field, Field, QAfterSortBy> thenByCanObscure() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('canObscure', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterSortBy> thenByCanObscureDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('canObscure', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterSortBy> thenById() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('id', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterSortBy> thenByIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('id', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterSortBy> thenByKey() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('key', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterSortBy> thenByKeyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('key', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterSortBy> thenByValue() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('value', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterSortBy> thenByValueDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy('value', Sort.desc);
+    });
+  }
+}
+
+extension FieldQueryWhereDistinct on QueryBuilder<Field, Field, QDistinct> {
+  QueryBuilder<Field, Field, QDistinct> distinctByCanObscure() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('canObscure');
+    });
+  }
+
+  QueryBuilder<Field, Field, QDistinct> distinctByKey(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('key', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<Field, Field, QDistinct> distinctByValue(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy('value', caseSensitive: caseSensitive);
+    });
+  }
+}
+
+extension FieldQueryProperty on QueryBuilder<Field, Field, QQueryProperty> {
+  QueryBuilder<Field, bool, QQueryOperations> canObscureProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('canObscure');
+    });
+  }
+
+  QueryBuilder<Field, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('id');
+    });
+  }
+
+  QueryBuilder<Field, String, QQueryOperations> keyProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('key');
+    });
+  }
+
+  QueryBuilder<Field, String, QQueryOperations> valueProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName('value');
     });
   }
 }
