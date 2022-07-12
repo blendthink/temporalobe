@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:temporalobe/ui/services/index.dart';
+import 'package:temporalobe/ui/box/index.dart';
 
 part 'router.g.dart';
 
@@ -15,13 +15,15 @@ class RootRoute extends GoRouteData {
   const RootRoute();
 
   @override
-  String? redirect() => const ServicesRoute().location;
+  String? redirect() => const BoxRoute(BoxTab.home).location;
 }
 
-@TypedGoRoute<ServicesRoute>(path: '/services')
-class ServicesRoute extends GoRouteData {
-  const ServicesRoute();
+@TypedGoRoute<BoxRoute>(path: '/:tab')
+class BoxRoute extends GoRouteData {
+  const BoxRoute(this.tab);
+
+  final BoxTab tab;
 
   @override
-  Widget build(BuildContext context) => const ServicesPage();
+  Widget build(BuildContext context) => BoxPage(tab: tab);
 }

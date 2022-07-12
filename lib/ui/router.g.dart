@@ -8,7 +8,7 @@ part of 'router.dart';
 
 List<GoRoute> get $appRoutes => [
       $rootRoute,
-      $servicesRoute,
+      $boxRoute,
     ];
 
 GoRoute get $rootRoute => GoRouteData.$route(
@@ -28,19 +28,31 @@ extension $RootRouteExtension on RootRoute {
   void push(BuildContext context) => context.push(location, extra: this);
 }
 
-GoRoute get $servicesRoute => GoRouteData.$route(
-      path: '/services',
-      factory: $ServicesRouteExtension._fromState,
+GoRoute get $boxRoute => GoRouteData.$route(
+      path: '/:tab',
+      factory: $BoxRouteExtension._fromState,
     );
 
-extension $ServicesRouteExtension on ServicesRoute {
-  static ServicesRoute _fromState(GoRouterState state) => const ServicesRoute();
+extension $BoxRouteExtension on BoxRoute {
+  static BoxRoute _fromState(GoRouterState state) => BoxRoute(
+        _$BoxTabEnumMap._$fromName(state.params['tab']!),
+      );
 
   String get location => GoRouteData.$location(
-        '/services',
+        '/${Uri.encodeComponent(_$BoxTabEnumMap[tab]!)}',
       );
 
   void go(BuildContext context) => context.go(location, extra: this);
 
   void push(BuildContext context) => context.push(location, extra: this);
+}
+
+const _$BoxTabEnumMap = {
+  BoxTab.home: 'home',
+  BoxTab.setting: 'setting',
+};
+
+extension<T extends Enum> on Map<T, String> {
+  T _$fromName(String value) =>
+      entries.singleWhere((element) => element.value == value).key;
 }
