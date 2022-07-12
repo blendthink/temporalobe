@@ -124,7 +124,7 @@ const items = <MapEntry<ServiceCategory, List<ServiceItem>>>[
       ),
       ServiceItem(
         title: 'YouTube',
-        fqdn: 'auth.sugi-net.jp',
+        fqdn: 'youtube.com',
       ),
     ],
   ),
