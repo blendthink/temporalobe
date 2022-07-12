@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 import 'package:temporalobe/data/model/service/category.dart';
+import 'package:temporalobe/ui/box/services/component/search_app_bar.dart';
 import 'package:temporalobe/ui/box/services/component/service_tile.dart';
 
 class ServicesPage extends HookConsumerWidget {
@@ -11,8 +12,8 @@ class ServicesPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Temporalobe'),
+      appBar: SearchAppBar(
+        onSearch: (text) {},
       ),
       body: ListView.builder(
         itemCount: items.length,
