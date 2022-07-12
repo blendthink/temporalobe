@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 import 'package:temporalobe/data/model/service/category.dart';
-import 'package:temporalobe/ui/services/component/service_tile.dart';
+import 'package:temporalobe/ui/box/services/component/service_tile.dart';
 
 class ServicesPage extends HookConsumerWidget {
   const ServicesPage({super.key});

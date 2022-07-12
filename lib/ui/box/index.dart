@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:temporalobe/ui/box/services/index.dart';
+import 'package:temporalobe/ui/box/settings/index.dart';
 import 'package:temporalobe/ui/router.dart';
-import 'package:temporalobe/ui/services/index.dart';
-import 'package:temporalobe/ui/settings/index.dart';
 
 class BoxPage extends StatelessWidget {
   const BoxPage({
