@@ -15,13 +15,13 @@ dependencies:
     sdk: flutter
   flutter_hooks: ^0.18.5+1
   freezed_annotation: ^2.0.3
+  gap: ^2.0.0
   go_router: ^4.1.0
   hooks_riverpod: ^2.0.0-dev.9
   isar: ^3.0.0-dev.0
   isar_flutter_libs: ^3.0.0-dev.0
   json_annotation: ^4.6.0
   path_provider: ^2.0.11
-  sticky_headers: ^0.3.0+2
 
 dev_dependencies:
   blendthink_lints: ^2.0.0
