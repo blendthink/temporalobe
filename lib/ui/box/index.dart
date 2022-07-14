@@ -26,15 +26,16 @@ class BoxPage extends StatelessWidget {
           SettingsPage(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: index,
-        onTap: (index) => BoxRoute(BoxTab.values[index]).go(context),
-        items: const [
-          BottomNavigationBarItem(
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (index) =>
+            BoxRoute(BoxTab.values[index]).go(context),
+        selectedIndex: index,
+        destinations: const [
+          NavigationDestination(
             icon: Icon(Icons.home),
             label: 'home',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.settings),
             label: 'settings',
           ),
