@@ -1,4 +1,6 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:temporalobe/ui/box/services/create.dart';
 import 'package:temporalobe/ui/box/services/index.dart';
 import 'package:temporalobe/ui/box/settings/index.dart';
 import 'package:temporalobe/ui/router.dart';
@@ -14,11 +16,37 @@ class BoxPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final index = tab.index;
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {},
+
+    final t = Theme.of(context);
+    final scheme = t.colorScheme;
+
+    final openContainer = OpenContainer(
+      transitionType: ContainerTransitionType.fadeThrough,
+      transitionDuration: const Duration(milliseconds: 400),
+      openBuilder: (context, closedContainer) {
+        return ServiceCreatePage(closed: closedContainer);
+      },
+      openColor: t.scaffoldBackgroundColor,
+      closedColor: scheme.primaryContainer,
+      closedShape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(16),
+        ),
       ),
+      closedElevation: 6,
+      closedBuilder: (context, openContainer) {
+        return FloatingActionButton(
+          onPressed: () {
+            openContainer();
+          },
+          elevation: 0,
+          child: const Icon(Icons.add),
+        );
+      },
+    );
+
+    return Scaffold(
+      floatingActionButton: tab == BoxTab.home ? openContainer : null,
       body: IndexedStack(
         index: index,
         children: const [
