@@ -128,7 +128,9 @@ class _$_Category implements _Category {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CategoryToJson(this);
+    return _$$_CategoryToJson(
+      this,
+    );
   }
 }
 

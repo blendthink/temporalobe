@@ -4,7 +4,7 @@ part 'scheme.g.dart';
 
 @Collection(accessor: 'categories')
 class Category {
-  final id = Isar.autoIncrement;
+  final Id id = Isar.autoIncrement;
 
   @Index(unique: true)
   late String name;
@@ -12,7 +12,7 @@ class Category {
 
 @Collection(accessor: 'services')
 class Service {
-  final id = Isar.autoIncrement;
+  final Id id = Isar.autoIncrement;
 
   final category = IsarLink<Category>();
 
@@ -29,7 +29,7 @@ class Service {
 
 @Collection(accessor: 'accounts')
 class Account {
-  final id = Isar.autoIncrement;
+  final Id id = Isar.autoIncrement;
 
   final service = IsarLink<Service>();
 
@@ -43,7 +43,7 @@ class Account {
 
 @Collection(accessor: 'fields')
 class Field {
-  final id = Isar.autoIncrement;
+  final Id id = Isar.autoIncrement;
 
   final account = IsarLink<Account>();
 

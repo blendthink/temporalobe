@@ -11,7 +11,7 @@ Future<void> main() async {
 
   final dir = await getApplicationSupportDirectory();
   final isar = await Isar.open(
-    schemas: [
+    [
       CategorySchema,
       ServiceSchema,
       AccountSchema,
