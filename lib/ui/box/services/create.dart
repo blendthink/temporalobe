@@ -21,6 +21,7 @@ class ServiceCreatePage extends ConsumerWidget {
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('Discard Changes'),
+            content: const Text('Are you sure you want to discard the changes?'),
             actions: [
               TextButton(
                 child: const Text('CANCEL'),
