@@ -44,7 +44,7 @@ class AccountCard extends ConsumerWidget {
                   if (field != null) {
                     ref
                         .read(fieldsProvider.state)
-                        .update((fields) => List.of(fields..add(field)));
+                        .update((fields) => [...fields, field]);
                   }
                 },
                 icon: const Icon(Icons.add),

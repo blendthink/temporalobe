@@ -16,13 +16,10 @@ class _State extends State<MemoFormField> {
     return TextFormField(
       decoration: const InputDecoration(
         border: OutlineInputBorder(),
-        hintText: 'Enter a memo...',
-        labelText: 'Memo',
-        alignLabelWithHint: true,
       ),
       minLines: 5,
       maxLines: 10,
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.multiline,
       onChanged: widget.onChanged,
     );
   }

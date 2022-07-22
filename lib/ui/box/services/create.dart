@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:temporalobe/ui/box/services/component/create/account_card.dart';
 import 'package:temporalobe/ui/box/services/component/create/form/category_form_field.dart';
@@ -46,8 +47,12 @@ class ServiceCreatePage extends ConsumerWidget {
                 CategoryFormField(
                   onChanged: (value) {},
                 ),
-                UrlFormField(
-                  onChanged: (value) {},
+                const Gap(16),
+                Text(
+                  'URL',
+                  style: t.primaryTextTheme.titleMedium?.copyWith(
+                    color: t.colorScheme.onSurface,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(12),
@@ -58,7 +63,7 @@ class ServiceCreatePage extends ConsumerWidget {
                   ),
                 ),
                 Text(
-                  'Accounts',
+                  'Account',
                   style: t.primaryTextTheme.titleMedium?.copyWith(
                     color: t.colorScheme.onSurface,
                   ),
@@ -74,6 +79,13 @@ class ServiceCreatePage extends ConsumerWidget {
                     label: const Text('Add Account'),
                   ),
                 ),
+                Text(
+                  'Memo',
+                  style: t.primaryTextTheme.titleMedium?.copyWith(
+                    color: t.colorScheme.onSurface,
+                  ),
+                ),
+                const Gap(16),
                 MemoFormField(
                   onChanged: (value) {},
                 ),
@@ -86,7 +98,7 @@ class ServiceCreatePage extends ConsumerWidget {
   }
 }
 
-final accountLengthProvider = StateProvider.autoDispose<int>((ref) => 1);
+final accountLengthProvider = StateProvider.autoDispose<int>((ref) => 0);
 
 class AccountCards extends ConsumerWidget {
   const AccountCards({super.key});
