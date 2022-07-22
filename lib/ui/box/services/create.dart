@@ -5,7 +5,7 @@ import 'package:temporalobe/ui/box/services/component/create/account_card.dart';
 import 'package:temporalobe/ui/box/services/component/create/form/category_form_field.dart';
 import 'package:temporalobe/ui/box/services/component/create/form/memo_form_field.dart';
 import 'package:temporalobe/ui/box/services/component/create/form/service_form_field.dart';
-import 'package:temporalobe/ui/box/services/component/create/form/url_form_field.dart';
+import 'package:temporalobe/ui/box/services/component/create/url_card.dart';
 
 class ServiceCreatePage extends ConsumerWidget {
   const ServiceCreatePage({
@@ -54,10 +54,13 @@ class ServiceCreatePage extends ConsumerWidget {
                     color: t.colorScheme.onSurface,
                   ),
                 ),
+                const UrlCars(),
                 Padding(
                   padding: const EdgeInsets.all(12),
                   child: ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      ref.read(urlLengthProvider.state).state++;
+                    },
                     icon: const Icon(Icons.add),
                     label: const Text('Add URL'),
                   ),
@@ -94,6 +97,26 @@ class ServiceCreatePage extends ConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+final urlLengthProvider = StateProvider.autoDispose<int>((ref) => 0);
+
+class UrlCars extends ConsumerWidget {
+  const UrlCars({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final length = ref.watch(urlLengthProvider);
+
+    return ListView.builder(
+      itemCount: length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        return const UrlCard();
+      },
     );
   }
 }

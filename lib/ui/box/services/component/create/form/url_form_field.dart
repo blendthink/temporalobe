@@ -15,6 +15,7 @@ class _State extends State<UrlFormField> {
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: const InputDecoration(
+        border: InputBorder.none,
         hintText: 'Enter a URL...',
         labelText: 'URL',
         prefixIcon: Icon(Icons.link),
