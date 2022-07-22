@@ -13,86 +13,120 @@ class ServiceCreatePage extends ConsumerWidget {
     required this.closed,
   });
 
-  final VoidCallback? closed;
+  final VoidCallback closed;
+
+  Future<bool> _shouldBack(BuildContext context) async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    return await showDialog<bool>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Discard Changes'),
+            actions: [
+              TextButton(
+                child: const Text('CANCEL'),
+                onPressed: () {
+                  Navigator.pop<bool>(context, false);
+                },
+              ),
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.pop<bool>(context, true);
+                },
+              ),
+            ],
+          ),
+        ) ??
+        false;
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('New Service'),
-        leading: IconButton(
-          onPressed: closed,
-          icon: const Icon(Icons.close),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.save),
+    return WillPopScope(
+      onWillPop: () async => _shouldBack(context),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('New Service'),
+          leading: IconButton(
+            onPressed: () async {
+              final shouldBack = await _shouldBack(context);
+              if (shouldBack) {
+                closed();
+              }
+            },
+            icon: const Icon(Icons.close),
           ),
-        ],
-      ),
-      body: SafeArea(
-        child: Form(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                ServiceFormField(
-                  onChanged: (value) {},
-                ),
-                CategoryFormField(
-                  onChanged: (value) {},
-                ),
-                const Gap(16),
-                Text(
-                  'URL',
-                  style: t.primaryTextTheme.titleMedium?.copyWith(
-                    color: t.colorScheme.onSurface,
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.save),
+            ),
+          ],
+        ),
+        body: SafeArea(
+          child: Form(
+            child: SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ServiceFormField(
+                    onChanged: (value) {},
                   ),
-                ),
-                const UrlCars(),
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      ref.read(urlLengthProvider.state).state++;
-                    },
-                    icon: const Icon(Icons.add),
-                    label: const Text('Add URL'),
+                  CategoryFormField(
+                    onChanged: (value) {},
                   ),
-                ),
-                Text(
-                  'Account',
-                  style: t.primaryTextTheme.titleMedium?.copyWith(
-                    color: t.colorScheme.onSurface,
+                  const Gap(16),
+                  Text(
+                    'URL',
+                    style: t.primaryTextTheme.titleMedium?.copyWith(
+                      color: t.colorScheme.onSurface,
+                    ),
                   ),
-                ),
-                const AccountCards(),
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      ref.read(accountLengthProvider.state).state++;
-                    },
-                    icon: const Icon(Icons.add),
-                    label: const Text('Add Account'),
+                  const UrlCars(),
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        ref.read(urlLengthProvider.state).state++;
+                      },
+                      icon: const Icon(Icons.add),
+                      label: const Text('Add URL'),
+                    ),
                   ),
-                ),
-                Text(
-                  'Memo',
-                  style: t.primaryTextTheme.titleMedium?.copyWith(
-                    color: t.colorScheme.onSurface,
+                  Text(
+                    'Account',
+                    style: t.primaryTextTheme.titleMedium?.copyWith(
+                      color: t.colorScheme.onSurface,
+                    ),
                   ),
-                ),
-                const Gap(16),
-                MemoFormField(
-                  onChanged: (value) {},
-                ),
-              ],
+                  const AccountCards(),
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        ref.read(accountLengthProvider.state).state++;
+                      },
+                      icon: const Icon(Icons.add),
+                      label: const Text('Add Account'),
+                    ),
+                  ),
+                  Text(
+                    'Memo',
+                    style: t.primaryTextTheme.titleMedium?.copyWith(
+                      color: t.colorScheme.onSurface,
+                    ),
+                  ),
+                  const Gap(16),
+                  MemoFormField(
+                    onChanged: (value) {},
+                  ),
+                ],
+              ),
             ),
           ),
         ),
