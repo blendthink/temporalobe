@@ -46,7 +46,7 @@ class BoxPage extends StatelessWidget {
     );
 
     return Scaffold(
-      floatingActionButton: tab == BoxTab.home ? openContainer : null,
+      floatingActionButton: tab == BoxTab.services ? openContainer : null,
       body: IndexedStack(
         index: index,
         children: const [
@@ -60,12 +60,12 @@ class BoxPage extends StatelessWidget {
         selectedIndex: index,
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.home),
-            label: 'home',
+            icon: Icon(Icons.public),
+            label: 'Services',
           ),
           NavigationDestination(
             icon: Icon(Icons.settings),
-            label: 'settings',
+            label: 'Settings',
           ),
         ],
       ),
@@ -73,4 +73,4 @@ class BoxPage extends StatelessWidget {
   }
 }
 
-enum BoxTab { home, setting }
+enum BoxTab { services, settings }

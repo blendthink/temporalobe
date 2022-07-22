@@ -15,7 +15,7 @@ class RootRoute extends GoRouteData {
   const RootRoute();
 
   @override
-  String? redirect() => const BoxRoute(BoxTab.home).location;
+  String? redirect() => const BoxRoute(BoxTab.services).location;
 }
 
 @TypedGoRoute<BoxRoute>(path: '/:tab')

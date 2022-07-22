@@ -48,8 +48,8 @@ extension $BoxRouteExtension on BoxRoute {
 }
 
 const _$BoxTabEnumMap = {
-  BoxTab.home: 'home',
-  BoxTab.setting: 'setting',
+  BoxTab.services: 'services',
+  BoxTab.settings: 'settings',
 };
 
 extension<T extends Enum> on Map<T, String> {
