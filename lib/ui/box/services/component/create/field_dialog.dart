@@ -48,7 +48,7 @@ class _State extends State<_FieldDialog> {
             FormField<bool>(
               builder: (state) {
                 return SwitchListTile(
-                  title: const Text('can obscure.'),
+                  title: const Text('Obscure Text'),
                   value: state.value ?? false,
                   onChanged: (value) {
                     state.didChange(value);
