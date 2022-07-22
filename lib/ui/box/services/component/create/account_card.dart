@@ -9,7 +9,7 @@ import 'package:temporalobe/ui/box/services/component/create/form/username_form_
 
 final fieldsProvider = StateProvider.autoDispose<List<Field>>((ref) => []);
 
-class AccountCard extends HookConsumerWidget {
+class AccountCard extends ConsumerWidget {
   const AccountCard({super.key});
 
   @override
@@ -58,7 +58,7 @@ class AccountCard extends HookConsumerWidget {
   }
 }
 
-class CustomFormFields extends HookConsumerWidget {
+class CustomFormFields extends ConsumerWidget {
   const CustomFormFields({super.key});
 
   @override
