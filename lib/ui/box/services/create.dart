@@ -63,18 +63,13 @@ class ServiceCreatePage extends ConsumerWidget {
                     color: t.colorScheme.onSurface,
                   ),
                 ),
-                ListView.builder(
-                  itemCount: 1,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return const AccountCard();
-                  },
-                ),
+                const AccountCards(),
                 Padding(
                   padding: const EdgeInsets.all(12),
                   child: ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      ref.read(accountLengthProvider.state).state++;
+                    },
                     icon: const Icon(Icons.add),
                     label: const Text('Add Account'),
                   ),
@@ -87,6 +82,26 @@ class ServiceCreatePage extends ConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+final accountLengthProvider = StateProvider.autoDispose<int>((ref) => 1);
+
+class AccountCards extends ConsumerWidget {
+  const AccountCards({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final length = ref.watch(accountLengthProvider);
+
+    return ListView.builder(
+      itemCount: length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        return const AccountCard();
+      },
     );
   }
 }
