@@ -143,7 +143,7 @@ class _State extends State<SearchAppBar>
                   ),
                   secondChild: Center(
                     child: Text(
-                      'Temporalobe',
+                      'Services',
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
