@@ -3,7 +3,7 @@ description: A password management application.
 
 publish_to: 'none'
 
-version: 1.0.0+6
+version: 1.0.0+7
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
