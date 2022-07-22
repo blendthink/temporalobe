@@ -23,7 +23,7 @@ mixin _$Account {
   String get username => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
   String get totp => throw _privateConstructorUsedError;
-  List<Field> get field => throw _privateConstructorUsedError;
+  List<Field> get fields => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +34,8 @@ mixin _$Account {
 abstract class $AccountCopyWith<$Res> {
   factory $AccountCopyWith(Account value, $Res Function(Account) then) =
       _$AccountCopyWithImpl<$Res>;
-  $Res call({String username, String password, String totp, List<Field> field});
+  $Res call(
+      {String username, String password, String totp, List<Field> fields});
 }
 
 /// @nodoc
@@ -50,7 +51,7 @@ class _$AccountCopyWithImpl<$Res> implements $AccountCopyWith<$Res> {
     Object? username = freezed,
     Object? password = freezed,
     Object? totp = freezed,
-    Object? field = freezed,
+    Object? fields = freezed,
   }) {
     return _then(_value.copyWith(
       username: username == freezed
@@ -65,9 +66,9 @@ class _$AccountCopyWithImpl<$Res> implements $AccountCopyWith<$Res> {
           ? _value.totp
           : totp // ignore: cast_nullable_to_non_nullable
               as String,
-      field: field == freezed
-          ? _value.field
-          : field // ignore: cast_nullable_to_non_nullable
+      fields: fields == freezed
+          ? _value.fields
+          : fields // ignore: cast_nullable_to_non_nullable
               as List<Field>,
     ));
   }
@@ -79,7 +80,8 @@ abstract class _$$_AccountCopyWith<$Res> implements $AccountCopyWith<$Res> {
           _$_Account value, $Res Function(_$_Account) then) =
       __$$_AccountCopyWithImpl<$Res>;
   @override
-  $Res call({String username, String password, String totp, List<Field> field});
+  $Res call(
+      {String username, String password, String totp, List<Field> fields});
 }
 
 /// @nodoc
@@ -96,7 +98,7 @@ class __$$_AccountCopyWithImpl<$Res> extends _$AccountCopyWithImpl<$Res>
     Object? username = freezed,
     Object? password = freezed,
     Object? totp = freezed,
-    Object? field = freezed,
+    Object? fields = freezed,
   }) {
     return _then(_$_Account(
       username: username == freezed
@@ -111,9 +113,9 @@ class __$$_AccountCopyWithImpl<$Res> extends _$AccountCopyWithImpl<$Res>
           ? _value.totp
           : totp // ignore: cast_nullable_to_non_nullable
               as String,
-      field: field == freezed
-          ? _value._field
-          : field // ignore: cast_nullable_to_non_nullable
+      fields: fields == freezed
+          ? _value._fields
+          : fields // ignore: cast_nullable_to_non_nullable
               as List<Field>,
     ));
   }
@@ -126,8 +128,8 @@ class _$_Account implements _Account {
       {required this.username,
       required this.password,
       required this.totp,
-      required final List<Field> field})
-      : _field = field;
+      required final List<Field> fields})
+      : _fields = fields;
 
   factory _$_Account.fromJson(Map<String, dynamic> json) =>
       _$$_AccountFromJson(json);
@@ -138,16 +140,16 @@ class _$_Account implements _Account {
   final String password;
   @override
   final String totp;
-  final List<Field> _field;
+  final List<Field> _fields;
   @override
-  List<Field> get field {
+  List<Field> get fields {
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_field);
+    return EqualUnmodifiableListView(_fields);
   }
 
   @override
   String toString() {
-    return 'Account(username: $username, password: $password, totp: $totp, field: $field)';
+    return 'Account(username: $username, password: $password, totp: $totp, fields: $fields)';
   }
 
   @override
@@ -158,7 +160,7 @@ class _$_Account implements _Account {
             const DeepCollectionEquality().equals(other.username, username) &&
             const DeepCollectionEquality().equals(other.password, password) &&
             const DeepCollectionEquality().equals(other.totp, totp) &&
-            const DeepCollectionEquality().equals(other._field, _field));
+            const DeepCollectionEquality().equals(other._fields, _fields));
   }
 
   @JsonKey(ignore: true)
@@ -168,7 +170,7 @@ class _$_Account implements _Account {
       const DeepCollectionEquality().hash(username),
       const DeepCollectionEquality().hash(password),
       const DeepCollectionEquality().hash(totp),
-      const DeepCollectionEquality().hash(_field));
+      const DeepCollectionEquality().hash(_fields));
 
   @JsonKey(ignore: true)
   @override
@@ -188,7 +190,7 @@ abstract class _Account implements Account {
       {required final String username,
       required final String password,
       required final String totp,
-      required final List<Field> field}) = _$_Account;
+      required final List<Field> fields}) = _$_Account;
 
   factory _Account.fromJson(Map<String, dynamic> json) = _$_Account.fromJson;
 
@@ -199,7 +201,7 @@ abstract class _Account implements Account {
   @override
   String get totp;
   @override
-  List<Field> get field;
+  List<Field> get fields;
   @override
   @JsonKey(ignore: true)
   _$$_AccountCopyWith<_$_Account> get copyWith =>

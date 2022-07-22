@@ -11,7 +11,7 @@ abstract class Account with _$Account {
     required String username,
     required String password,
     required String totp,
-    required List<Field> field,
+    required List<Field> fields,
   }) = _Account;
 
   factory Account.fromJson(Map<String, dynamic> json) =>
