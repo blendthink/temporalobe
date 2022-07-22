@@ -25,6 +25,12 @@ class ServiceCreatePage extends ConsumerWidget {
           onPressed: closed,
           icon: const Icon(Icons.close),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.save),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Form(
