@@ -7,6 +7,8 @@ import 'package:temporalobe/ui/box/services/component/create/form/password_form_
 import 'package:temporalobe/ui/box/services/component/create/form/totp_form_field.dart';
 import 'package:temporalobe/ui/box/services/component/create/form/username_form_field.dart';
 
+final fieldsProvider = StateProvider.autoDispose<List<Field>>((ref) => []);
+
 class AccountCard extends HookConsumerWidget {
   const AccountCard({super.key});
 
@@ -55,13 +57,6 @@ class AccountCard extends HookConsumerWidget {
     );
   }
 }
-
-final fieldsProvider = StateProvider.autoDispose(
-  (ref) => [
-    const Field(key: 'PIN', value: '123456', canObscure: true),
-    const Field(key: 'Organization', value: '', canObscure: false),
-  ],
-);
 
 class CustomFormFields extends HookConsumerWidget {
   const CustomFormFields({super.key});
