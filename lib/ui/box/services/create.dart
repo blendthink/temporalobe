@@ -16,7 +16,7 @@ class ServiceCreatePage extends ConsumerWidget {
   final VoidCallback closed;
 
   Future<bool> _shouldBack(BuildContext context) async {
-    FocusManager.instance.primaryFocus?.unfocus();
+    primaryFocus?.unfocus();
     return await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
