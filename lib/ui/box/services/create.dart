@@ -110,9 +110,7 @@ class _State extends ConsumerState<ServiceCreatePage> {
                   const Gap(16),
                   Text(
                     'URL',
-                    style: t.textTheme.titleMedium?.copyWith(
-                      color: t.colorScheme.onSurface,
-                    ),
+                    style: t.textTheme.titleMedium,
                   ),
                   const UrlCars(),
                   Padding(
@@ -127,9 +125,7 @@ class _State extends ConsumerState<ServiceCreatePage> {
                   ),
                   Text(
                     'Account',
-                    style: t.textTheme.titleMedium?.copyWith(
-                      color: t.colorScheme.onSurface,
-                    ),
+                    style: t.textTheme.titleMedium,
                   ),
                   const AccountCards(),
                   Padding(
@@ -144,9 +140,7 @@ class _State extends ConsumerState<ServiceCreatePage> {
                   ),
                   Text(
                     'Memo',
-                    style: t.textTheme.titleMedium?.copyWith(
-                      color: t.colorScheme.onSurface,
-                    ),
+                    style: t.textTheme.titleMedium,
                   ),
                   const Gap(16),
                   MemoFormField(
