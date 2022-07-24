@@ -11,7 +11,7 @@ import 'package:temporalobe/ui/box/services/component/create/url_card.dart';
 
 class _FormData {
   String name = '';
-  Category category = const Category(name: '');
+  Category? category;
   List<Uri> uris = [];
   List<Account> accounts = [];
 }
