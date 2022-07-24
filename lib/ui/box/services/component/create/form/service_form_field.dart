@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:temporalobe/extension/string.dart';
 
 class ServiceFormField extends StatefulWidget {
   const ServiceFormField({super.key, required this.onChanged});
@@ -10,7 +11,6 @@ class ServiceFormField extends StatefulWidget {
 }
 
 class _State extends State<ServiceFormField> {
-
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -22,6 +22,12 @@ class _State extends State<ServiceFormField> {
       ),
       keyboardType: TextInputType.text,
       onChanged: widget.onChanged,
+      validator: (value) {
+        if (value.isNullOrEmpty) {
+          return 'Required';
+        }
+        return null;
+      },
     );
   }
 }
