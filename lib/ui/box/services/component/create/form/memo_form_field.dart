@@ -4,7 +4,7 @@ import 'package:temporalobe/data/model/service/memo.dart';
 class MemoFormField extends StatefulWidget {
   const MemoFormField({super.key, required this.onChanged});
 
-  final ValueChanged<Memo?> onChanged;
+  final ValueChanged<Memo> onChanged;
 
   @override
   State<StatefulWidget> createState() => _State();
@@ -21,13 +21,7 @@ class _State extends State<MemoFormField> {
       maxLines: 10,
       keyboardType: TextInputType.multiline,
       onChanged: (value) {
-        final Memo? memo;
-        if (value.isEmpty) {
-          memo = null;
-        } else {
-          memo = Memo(value);
-        }
-        widget.onChanged(memo);
+        widget.onChanged(Memo(value));
       },
     );
   }

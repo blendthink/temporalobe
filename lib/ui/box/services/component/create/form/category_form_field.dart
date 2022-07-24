@@ -4,7 +4,7 @@ import 'package:temporalobe/data/model/service/category.dart';
 class CategoryFormField extends StatefulWidget {
   const CategoryFormField({super.key, required this.onChanged});
 
-  final ValueChanged<Category?> onChanged;
+  final ValueChanged<Category> onChanged;
 
   @override
   State<StatefulWidget> createState() => _State();
@@ -22,13 +22,7 @@ class _State extends State<CategoryFormField> {
       ),
       keyboardType: TextInputType.text,
       onChanged: (value) {
-        final Category? category;
-        if (value.isEmpty) {
-          category = null;
-        } else {
-          category = Category(value);
-        }
-        widget.onChanged(category);
+        widget.onChanged(Category(value));
       },
     );
   }
