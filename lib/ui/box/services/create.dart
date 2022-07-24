@@ -108,7 +108,7 @@ class _State extends ConsumerState<ServiceCreatePage> {
                   const Gap(16),
                   Text(
                     'URL',
-                    style: t.primaryTextTheme.titleMedium?.copyWith(
+                    style: t.textTheme.titleMedium?.copyWith(
                       color: t.colorScheme.onSurface,
                     ),
                   ),
@@ -125,7 +125,7 @@ class _State extends ConsumerState<ServiceCreatePage> {
                   ),
                   Text(
                     'Account',
-                    style: t.primaryTextTheme.titleMedium?.copyWith(
+                    style: t.textTheme.titleMedium?.copyWith(
                       color: t.colorScheme.onSurface,
                     ),
                   ),
@@ -142,7 +142,7 @@ class _State extends ConsumerState<ServiceCreatePage> {
                   ),
                   Text(
                     'Memo',
-                    style: t.primaryTextTheme.titleMedium?.copyWith(
+                    style: t.textTheme.titleMedium?.copyWith(
                       color: t.colorScheme.onSurface,
                     ),
                   ),
