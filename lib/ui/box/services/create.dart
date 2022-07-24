@@ -7,7 +7,7 @@ import 'package:temporalobe/ui/box/services/component/create/account_card.dart';
 import 'package:temporalobe/ui/box/services/component/create/form/category_form_field.dart';
 import 'package:temporalobe/ui/box/services/component/create/form/memo_form_field.dart';
 import 'package:temporalobe/ui/box/services/component/create/form/service_form_field.dart';
-import 'package:temporalobe/ui/box/services/component/create/url_card.dart';
+import 'package:temporalobe/ui/box/services/component/create/uri_card.dart';
 
 class _FormData {
   String name = '';
@@ -112,12 +112,12 @@ class _State extends ConsumerState<ServiceCreatePage> {
                     'URL',
                     style: t.textTheme.titleMedium,
                   ),
-                  const UrlCars(),
+                  const UriCars(),
                   Padding(
                     padding: const EdgeInsets.all(12),
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        ref.read(urlLengthProvider.state).state++;
+                        ref.read(uriLengthProvider.state).state++;
                       },
                       icon: const Icon(Icons.add),
                       label: const Text('Add URL'),
@@ -156,21 +156,23 @@ class _State extends ConsumerState<ServiceCreatePage> {
   }
 }
 
-final urlLengthProvider = StateProvider.autoDispose<int>((ref) => 0);
+final uriLengthProvider = StateProvider.autoDispose<int>((ref) => 0);
 
-class UrlCars extends ConsumerWidget {
-  const UrlCars({super.key});
+class UriCars extends ConsumerWidget {
+  const UriCars({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final length = ref.watch(urlLengthProvider);
+    final length = ref.watch(uriLengthProvider);
 
     return ListView.builder(
       itemCount: length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        return const UrlCard();
+        return UriCard(
+          onChanged: (value) {},
+        );
       },
     );
   }
