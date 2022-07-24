@@ -103,7 +103,9 @@ class _State extends ConsumerState<ServiceCreatePage> {
                     },
                   ),
                   CategoryFormField(
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      _formData.category = value;
+                    },
                   ),
                   const Gap(16),
                   Text(
