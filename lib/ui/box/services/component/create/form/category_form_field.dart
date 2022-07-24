@@ -26,7 +26,7 @@ class _State extends State<CategoryFormField> {
         if (value.isEmpty) {
           category = null;
         } else {
-          category = Category(name: value);
+          category = Category(value);
         }
         widget.onChanged(category);
       },

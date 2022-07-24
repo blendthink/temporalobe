@@ -1,15 +1,5 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:temporalobe/util/value_object.dart';
 
-part 'category.freezed.dart';
-
-part 'category.g.dart';
-
-@freezed
-abstract class Category with _$Category {
-  const factory Category({
-    required String name,
-  }) = _Category;
-
-  factory Category.fromJson(Map<String, dynamic> json) =>
-      _$CategoryFromJson(json);
+class Category extends ValueObject<String> {
+  const Category(super.value);
 }
