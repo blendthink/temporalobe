@@ -7,7 +7,7 @@ import 'package:temporalobe/ui/box/services/component/create/form/memo_form_fiel
 import 'package:temporalobe/ui/box/services/component/create/form/service_form_field.dart';
 import 'package:temporalobe/ui/box/services/component/create/url_card.dart';
 
-class ServiceCreatePage extends ConsumerWidget {
+class ServiceCreatePage extends ConsumerStatefulWidget {
   const ServiceCreatePage({
     super.key,
     required this.closed,
@@ -15,13 +15,19 @@ class ServiceCreatePage extends ConsumerWidget {
 
   final VoidCallback closed;
 
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _State();
+}
+
+class _State extends ConsumerState<ServiceCreatePage> {
   Future<bool> _shouldBack(BuildContext context) async {
     primaryFocus?.unfocus();
     return await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('Discard Changes'),
-            content: const Text('Are you sure you want to discard the changes?'),
+            content:
+                const Text('Are you sure you want to discard the changes?'),
             actions: [
               TextButton(
                 child: const Text('CANCEL'),
@@ -42,7 +48,7 @@ class ServiceCreatePage extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final t = Theme.of(context);
 
     return WillPopScope(
@@ -54,7 +60,7 @@ class ServiceCreatePage extends ConsumerWidget {
             onPressed: () async {
               final shouldBack = await _shouldBack(context);
               if (shouldBack) {
-                closed();
+                widget.closed();
               }
             },
             icon: const Icon(Icons.close),
