@@ -5,11 +5,11 @@ part 'category.freezed.dart';
 part 'category.g.dart';
 
 @freezed
-abstract class ServiceCategory with _$ServiceCategory {
-  const factory ServiceCategory({
+abstract class Category with _$Category {
+  const factory Category({
     required String name,
   }) = _Category;
 
-  factory ServiceCategory.fromJson(Map<String, dynamic> json) =>
-      _$ServiceCategoryFromJson(json);
+  factory Category.fromJson(Map<String, dynamic> json) =>
+      _$CategoryFromJson(json);
 }

@@ -14,36 +14,34 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-ServiceCategory _$ServiceCategoryFromJson(Map<String, dynamic> json) {
+Category _$CategoryFromJson(Map<String, dynamic> json) {
   return _Category.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ServiceCategory {
+mixin _$Category {
   String get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ServiceCategoryCopyWith<ServiceCategory> get copyWith =>
+  $CategoryCopyWith<Category> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ServiceCategoryCopyWith<$Res> {
-  factory $ServiceCategoryCopyWith(
-          ServiceCategory value, $Res Function(ServiceCategory) then) =
-      _$ServiceCategoryCopyWithImpl<$Res>;
+abstract class $CategoryCopyWith<$Res> {
+  factory $CategoryCopyWith(Category value, $Res Function(Category) then) =
+      _$CategoryCopyWithImpl<$Res>;
   $Res call({String name});
 }
 
 /// @nodoc
-class _$ServiceCategoryCopyWithImpl<$Res>
-    implements $ServiceCategoryCopyWith<$Res> {
-  _$ServiceCategoryCopyWithImpl(this._value, this._then);
+class _$CategoryCopyWithImpl<$Res> implements $CategoryCopyWith<$Res> {
+  _$CategoryCopyWithImpl(this._value, this._then);
 
-  final ServiceCategory _value;
+  final Category _value;
   // ignore: unused_field
-  final $Res Function(ServiceCategory) _then;
+  final $Res Function(Category) _then;
 
   @override
   $Res call({
@@ -59,8 +57,7 @@ class _$ServiceCategoryCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_CategoryCopyWith<$Res>
-    implements $ServiceCategoryCopyWith<$Res> {
+abstract class _$$_CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
   factory _$$_CategoryCopyWith(
           _$_Category value, $Res Function(_$_Category) then) =
       __$$_CategoryCopyWithImpl<$Res>;
@@ -69,8 +66,7 @@ abstract class _$$_CategoryCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CategoryCopyWithImpl<$Res>
-    extends _$ServiceCategoryCopyWithImpl<$Res>
+class __$$_CategoryCopyWithImpl<$Res> extends _$CategoryCopyWithImpl<$Res>
     implements _$$_CategoryCopyWith<$Res> {
   __$$_CategoryCopyWithImpl(
       _$_Category _value, $Res Function(_$_Category) _then)
@@ -105,7 +101,7 @@ class _$_Category implements _Category {
 
   @override
   String toString() {
-    return 'ServiceCategory(name: $name)';
+    return 'Category(name: $name)';
   }
 
   @override
@@ -134,7 +130,7 @@ class _$_Category implements _Category {
   }
 }
 
-abstract class _Category implements ServiceCategory {
+abstract class _Category implements Category {
   const factory _Category({required final String name}) = _$_Category;
 
   factory _Category.fromJson(Map<String, dynamic> json) = _$_Category.fromJson;
