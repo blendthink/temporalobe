@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:temporalobe/data/model/service/account.dart';
 import 'package:temporalobe/data/model/service/category.dart';
+import 'package:temporalobe/data/model/service/service.dart';
 import 'package:temporalobe/data/model/service/service_name.dart';
 import 'package:temporalobe/ui/box/services/component/create/account_card.dart';
 import 'package:temporalobe/ui/box/services/component/create/form/category_form_field.dart';
@@ -83,6 +86,15 @@ class _State extends ConsumerState<ServiceCreatePage> {
               onPressed: () {
                 final validate = _formKey.currentState!.validate();
                 if (validate) {}
+
+                final service = Service(
+                  name: _formData.serviceName,
+                  category: _formData.category,
+                  uris: [],
+                  accounts: [],
+                );
+
+                print(jsonEncode(service));
               },
               icon: const Icon(Icons.save),
             ),
