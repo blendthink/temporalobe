@@ -3,15 +3,16 @@ import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:temporalobe/data/model/service/account.dart';
 import 'package:temporalobe/data/model/service/category.dart';
+import 'package:temporalobe/data/model/service/service_name.dart';
 import 'package:temporalobe/ui/box/services/component/create/account_card.dart';
 import 'package:temporalobe/ui/box/services/component/create/form/category_form_field.dart';
 import 'package:temporalobe/ui/box/services/component/create/form/memo_form_field.dart';
-import 'package:temporalobe/ui/box/services/component/create/form/service_form_field.dart';
 import 'package:temporalobe/ui/box/services/component/create/uri_card.dart';
+import 'package:temporalobe/ui/box/services/component/create/form/service_name_form_field.dart';
 
 class _FormData {
-  String name = '';
-  Category? category;
+  ServiceName serviceName = const ServiceName('');
+  Category category = const Category('');
   List<Uri> uris = [];
   List<Account> accounts = [];
 }
@@ -97,9 +98,9 @@ class _State extends ConsumerState<ServiceCreatePage> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ServiceFormField(
+                  ServiceNameFormField(
                     onChanged: (value) {
-                      _formData.name = value;
+                      _formData.serviceName = value;
                     },
                   ),
                   CategoryFormField(
