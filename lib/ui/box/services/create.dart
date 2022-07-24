@@ -7,8 +7,8 @@ import 'package:temporalobe/data/model/service/service_name.dart';
 import 'package:temporalobe/ui/box/services/component/create/account_card.dart';
 import 'package:temporalobe/ui/box/services/component/create/form/category_form_field.dart';
 import 'package:temporalobe/ui/box/services/component/create/form/memo_form_field.dart';
-import 'package:temporalobe/ui/box/services/component/create/uri_card.dart';
 import 'package:temporalobe/ui/box/services/component/create/form/service_name_form_field.dart';
+import 'package:temporalobe/ui/box/services/component/create/uri_cards.dart';
 
 class _FormData {
   ServiceName serviceName = const ServiceName('');
@@ -113,13 +113,13 @@ class _State extends ConsumerState<ServiceCreatePage> {
                     'URL',
                     style: t.textTheme.titleMedium,
                   ),
-                  const UriCars(),
+                  UriCards(
+                    onChanged: (value) {},
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(12),
                     child: ElevatedButton.icon(
-                      onPressed: () {
-                        ref.read(uriLengthProvider.state).state++;
-                      },
+                      onPressed: () {},
                       icon: const Icon(Icons.add),
                       label: const Text('Add URL'),
                     ),
@@ -153,28 +153,6 @@ class _State extends ConsumerState<ServiceCreatePage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-final uriLengthProvider = StateProvider.autoDispose<int>((ref) => 0);
-
-class UriCars extends ConsumerWidget {
-  const UriCars({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final length = ref.watch(uriLengthProvider);
-
-    return ListView.builder(
-      itemCount: length,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        return UriCard(
-          onChanged: (value) {},
-        );
-      },
     );
   }
 }
