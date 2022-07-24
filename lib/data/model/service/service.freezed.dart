@@ -20,9 +20,7 @@ Service _$ServiceFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Service {
-  @ServiceNameConverter()
   ServiceName get name => throw _privateConstructorUsedError;
-  @CategoryConverter()
   Category get category => throw _privateConstructorUsedError;
   List<Uri> get uris => throw _privateConstructorUsedError;
   List<Account> get accounts => throw _privateConstructorUsedError;
@@ -37,8 +35,8 @@ abstract class $ServiceCopyWith<$Res> {
   factory $ServiceCopyWith(Service value, $Res Function(Service) then) =
       _$ServiceCopyWithImpl<$Res>;
   $Res call(
-      {@ServiceNameConverter() ServiceName name,
-      @CategoryConverter() Category category,
+      {ServiceName name,
+      Category category,
       List<Uri> uris,
       List<Account> accounts});
 }
@@ -86,8 +84,8 @@ abstract class _$$_ServiceCopyWith<$Res> implements $ServiceCopyWith<$Res> {
       __$$_ServiceCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@ServiceNameConverter() ServiceName name,
-      @CategoryConverter() Category category,
+      {ServiceName name,
+      Category category,
       List<Uri> uris,
       List<Account> accounts});
 }
@@ -133,8 +131,8 @@ class __$$_ServiceCopyWithImpl<$Res> extends _$ServiceCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Service implements _Service {
   const _$_Service(
-      {@ServiceNameConverter() required this.name,
-      @CategoryConverter() required this.category,
+      {required this.name,
+      required this.category,
       required final List<Uri> uris,
       required final List<Account> accounts})
       : _uris = uris,
@@ -144,10 +142,8 @@ class _$_Service implements _Service {
       _$$_ServiceFromJson(json);
 
   @override
-  @ServiceNameConverter()
   final ServiceName name;
   @override
-  @CategoryConverter()
   final Category category;
   final List<Uri> _uris;
   @override
@@ -203,18 +199,16 @@ class _$_Service implements _Service {
 
 abstract class _Service implements Service {
   const factory _Service(
-      {@ServiceNameConverter() required final ServiceName name,
-      @CategoryConverter() required final Category category,
+      {required final ServiceName name,
+      required final Category category,
       required final List<Uri> uris,
       required final List<Account> accounts}) = _$_Service;
 
   factory _Service.fromJson(Map<String, dynamic> json) = _$_Service.fromJson;
 
   @override
-  @ServiceNameConverter()
   ServiceName get name;
   @override
-  @CategoryConverter()
   Category get category;
   @override
   List<Uri> get uris;

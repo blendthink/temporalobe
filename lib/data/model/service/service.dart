@@ -10,8 +10,8 @@ part 'service.g.dart';
 @freezed
 class Service with _$Service {
   const factory Service({
-    @ServiceNameConverter() required ServiceName name,
-    @CategoryConverter() required Category category,
+    required ServiceName name,
+    required Category category,
     required List<Uri> uris,
     required List<Account> accounts,
   }) = _Service;

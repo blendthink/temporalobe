@@ -7,8 +7,8 @@ part of 'service.dart';
 // **************************************************************************
 
 _$_Service _$$_ServiceFromJson(Map<String, dynamic> json) => _$_Service(
-      name: const ServiceNameConverter().fromJson(json['name'] as String),
-      category: const CategoryConverter().fromJson(json['category'] as String),
+      name: ServiceName.fromJson(json['name'] as String),
+      category: Category.fromJson(json['category'] as String),
       uris: (json['uris'] as List<dynamic>)
           .map((e) => Uri.parse(e as String))
           .toList(),
@@ -19,8 +19,8 @@ _$_Service _$$_ServiceFromJson(Map<String, dynamic> json) => _$_Service(
 
 Map<String, dynamic> _$$_ServiceToJson(_$_Service instance) =>
     <String, dynamic>{
-      'name': const ServiceNameConverter().toJson(instance.name),
-      'category': const CategoryConverter().toJson(instance.category),
+      'name': instance.name,
+      'category': instance.category,
       'uris': instance.uris.map((e) => e.toString()).toList(),
       'accounts': instance.accounts,
     };
