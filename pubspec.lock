@@ -407,21 +407,21 @@ packages:
       name: isar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0-dev.8"
+    version: "3.0.0-dev.13"
   isar_flutter_libs:
     dependency: "direct main"
     description:
       name: isar_flutter_libs
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0-dev.8"
+    version: "3.0.0-dev.13"
   isar_generator:
     dependency: "direct dev"
     description:
       name: isar_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0-dev.8"
+    version: "3.0.0-dev.13"
   js:
     dependency: transitive
     description:
@@ -798,6 +798,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0+1"
+  xxh3:
+    dependency: transitive
+    description:
+      name: xxh3
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   yaml:
     dependency: transitive
     description:
