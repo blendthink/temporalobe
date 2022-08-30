@@ -7,116 +7,126 @@ part of 'scheme.dart';
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, avoid_js_rounded_ints, prefer_final_locals
 
 extension GetCategoryCollection on Isar {
-  IsarCollection<Category> get categories => collection();
+  IsarCollection<Category> get categories => this.collection();
 }
 
 const CategorySchema = CollectionSchema(
   name: r'Category',
-  schema:
-      r'{"name":"Category","idName":"id","properties":[{"name":"name","type":"String"}],"indexes":[{"name":"name","unique":true,"replace":false,"properties":[{"name":"name","type":"Hash","caseSensitive":true}]}],"links":[]}',
-  idName: r'id',
-  propertyIds: {r'name': 0},
-  listProperties: {},
-  indexIds: {r'name': 0},
-  indexValueTypes: {
-    r'name': [
-      IndexValueType.stringHash,
-    ]
+  id: 5751694338128944171,
+  properties: {
+    r'name': PropertySchema(
+      id: 0,
+      name: r'name',
+      type: IsarType.string,
+    )
   },
-  linkIds: {},
-  backlinkLinkNames: {},
-  getId: _categoryGetId,
-  getLinks: _categoryGetLinks,
-  attachLinks: _categoryAttachLinks,
+  estimateSize: _categoryEstimateSize,
   serializeNative: _categorySerializeNative,
   deserializeNative: _categoryDeserializeNative,
   deserializePropNative: _categoryDeserializePropNative,
   serializeWeb: _categorySerializeWeb,
   deserializeWeb: _categoryDeserializeWeb,
   deserializePropWeb: _categoryDeserializePropWeb,
-  version: 4,
+  idName: r'id',
+  indexes: {
+    r'name': IndexSchema(
+      id: 879695947855722453,
+      name: r'name',
+      unique: true,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'name',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
+  },
+  links: {},
+  embeddedSchemas: {},
+  getId: _categoryGetId,
+  getLinks: _categoryGetLinks,
+  attach: _categoryAttach,
+  version: '3.0.0-dev.13',
 );
 
-int? _categoryGetId(Category object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
-  }
+int _categoryEstimateSize(
+  Category object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.name.length * 3;
+  return bytesCount;
 }
 
-List<IsarLinkBase<dynamic>> _categoryGetLinks(Category object) {
-  return [];
+int _categorySerializeNative(
+  Category object,
+  IsarBinaryWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeString(offsets[0], object.name);
+  return writer.usedBytes;
 }
 
-void _categorySerializeNative(
-    IsarCollection<Category> collection,
-    IsarCObject cObj,
-    Category object,
-    int staticSize,
-    List<int> offsets,
-    AdapterAlloc alloc) {
-  final name$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.name);
-  final size = (staticSize + 3 + (name$Bytes.length)) as int;
-  cObj.buffer = alloc(size);
-  cObj.buffer_length = size;
-
-  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeHeader();
-  writer.writeByteList(offsets[0], name$Bytes);
-}
-
-Category _categoryDeserializeNative(IsarCollection<Category> collection, int id,
-    IsarBinaryReader reader, List<int> offsets) {
+Category _categoryDeserializeNative(
+  Id id,
+  IsarBinaryReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
   final object = Category();
   object.name = reader.readString(offsets[0]);
   return object;
 }
 
 P _categoryDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
+  IsarBinaryReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
     case 0:
       return (reader.readString(offset)) as P;
     default:
-      throw IsarError('Illegal propertyIndex');
+      throw IsarError('Unknown property with id $propertyId');
   }
 }
 
 Object _categorySerializeWeb(
     IsarCollection<Category> collection, Category object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, r'id', object.id);
-  IsarNative.jsObjectSet(jsObj, r'name', object.name);
-  return jsObj;
+  /*final jsObj = IsarNative.newJsObject();*/ throw UnimplementedError();
 }
 
 Category _categoryDeserializeWeb(
     IsarCollection<Category> collection, Object jsObj) {
-  final object = Category();
-  object.name = IsarNative.jsObjectGet(jsObj, r'name') ?? '';
-  return object;
+  /*final object = Category();object.name = IsarNative.jsObjectGet(jsObj, r'name') ?? '';*/
+  //return object;
+  throw UnimplementedError();
 }
 
 P _categoryDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
-    case r'id':
-      return (IsarNative.jsObjectGet(jsObj, r'id')) as P;
-    case r'name':
-      return (IsarNative.jsObjectGet(jsObj, r'name') ?? '') as P;
     default:
       throw IsarError('Illegal propertyName');
   }
 }
 
-void _categoryAttachLinks(
-    IsarCollection<dynamic> col, int id, Category object) {}
+Id _categoryGetId(Category object) {
+  return object.id;
+}
+
+List<IsarLinkBase<dynamic>> _categoryGetLinks(Category object) {
+  return [];
+}
+
+void _categoryAttach(IsarCollection<dynamic> col, Id id, Category object) {}
 
 extension CategoryByIndex on IsarCollection<Category> {
   Future<Category?> getByName(String name) {
@@ -360,8 +370,8 @@ extension CategoryQueryFilter
 
   QueryBuilder<Category, Category, QAfterFilterCondition> nameGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -375,8 +385,8 @@ extension CategoryQueryFilter
 
   QueryBuilder<Category, Category, QAfterFilterCondition> nameLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
@@ -391,9 +401,9 @@ extension CategoryQueryFilter
   QueryBuilder<Category, Category, QAfterFilterCondition> nameBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -456,13 +466,33 @@ extension CategoryQueryFilter
       ));
     });
   }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> nameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'name',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Category, Category, QAfterFilterCondition> nameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'name',
+        value: '',
+      ));
+    });
+  }
 }
+
+extension CategoryQueryObject
+    on QueryBuilder<Category, Category, QFilterCondition> {}
 
 extension CategoryQueryLinks
     on QueryBuilder<Category, Category, QFilterCondition> {}
 
-extension CategoryQueryWhereSortBy
-    on QueryBuilder<Category, Category, QSortBy> {
+extension CategoryQuerySortBy on QueryBuilder<Category, Category, QSortBy> {
   QueryBuilder<Category, Category, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -476,7 +506,7 @@ extension CategoryQueryWhereSortBy
   }
 }
 
-extension CategoryQueryWhereSortThenBy
+extension CategoryQuerySortThenBy
     on QueryBuilder<Category, Category, QSortThenBy> {
   QueryBuilder<Category, Category, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
@@ -529,99 +559,127 @@ extension CategoryQueryProperty
 }
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, avoid_js_rounded_ints, prefer_final_locals
 
 extension GetServiceCollection on Isar {
-  IsarCollection<Service> get services => collection();
+  IsarCollection<Service> get services => this.collection();
 }
 
 const ServiceSchema = CollectionSchema(
   name: r'Service',
-  schema:
-      r'{"name":"Service","idName":"id","properties":[{"name":"memo","type":"String"},{"name":"name","type":"String"},{"name":"urls","type":"StringList"}],"indexes":[{"name":"name","unique":false,"replace":false,"properties":[{"name":"name","type":"Hash","caseSensitive":true}]}],"links":[{"name":"category","target":"Category"}]}',
-  idName: r'id',
-  propertyIds: {r'memo': 0, r'name': 1, r'urls': 2},
-  listProperties: {r'urls'},
-  indexIds: {r'name': 0},
-  indexValueTypes: {
-    r'name': [
-      IndexValueType.stringHash,
-    ]
+  id: 5821490378584524423,
+  properties: {
+    r'memo': PropertySchema(
+      id: 0,
+      name: r'memo',
+      type: IsarType.string,
+    ),
+    r'name': PropertySchema(
+      id: 1,
+      name: r'name',
+      type: IsarType.string,
+    ),
+    r'urls': PropertySchema(
+      id: 2,
+      name: r'urls',
+      type: IsarType.stringList,
+    )
   },
-  linkIds: {r'category': 0, r'accounts': 1},
-  backlinkLinkNames: {r'accounts': r'service'},
-  getId: _serviceGetId,
-  getLinks: _serviceGetLinks,
-  attachLinks: _serviceAttachLinks,
+  estimateSize: _serviceEstimateSize,
   serializeNative: _serviceSerializeNative,
   deserializeNative: _serviceDeserializeNative,
   deserializePropNative: _serviceDeserializePropNative,
   serializeWeb: _serviceSerializeWeb,
   deserializeWeb: _serviceDeserializeWeb,
   deserializePropWeb: _serviceDeserializePropWeb,
-  version: 4,
+  idName: r'id',
+  indexes: {
+    r'name': IndexSchema(
+      id: 879695947855722453,
+      name: r'name',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'name',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
+  },
+  links: {
+    r'category': LinkSchema(
+      id: -4455434116884312442,
+      name: r'category',
+      target: r'Category',
+      isSingle: true,
+    ),
+    r'accounts': LinkSchema(
+      id: -1014410604465071401,
+      name: r'accounts',
+      target: r'Account',
+      isSingle: false,
+      linkName: r'service',
+    )
+  },
+  embeddedSchemas: {},
+  getId: _serviceGetId,
+  getLinks: _serviceGetLinks,
+  attach: _serviceAttach,
+  version: '3.0.0-dev.13',
 );
 
-int? _serviceGetId(Service object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
+int _serviceEstimateSize(
+  Service object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.memo.length * 3;
+  bytesCount += 3 + object.name.length * 3;
+  bytesCount += 3 + object.urls.length * 3;
+  {
+    for (var i = 0; i < object.urls.length; i++) {
+      final value = object.urls[i];
+      bytesCount += value.length * 3;
+    }
   }
+  return bytesCount;
 }
 
-List<IsarLinkBase<dynamic>> _serviceGetLinks(Service object) {
-  return [object.category, object.accounts];
+int _serviceSerializeNative(
+  Service object,
+  IsarBinaryWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeString(offsets[0], object.memo);
+  writer.writeString(offsets[1], object.name);
+  writer.writeStringList(offsets[2], object.urls);
+  return writer.usedBytes;
 }
 
-void _serviceSerializeNative(
-    IsarCollection<Service> collection,
-    IsarCObject cObj,
-    Service object,
-    int staticSize,
-    List<int> offsets,
-    AdapterAlloc alloc) {
-  final memo$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.memo);
-  final name$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.name);
-  var urls$BytesCount = 3 + (object.urls.length) * 3;
-  final urls$BytesList = <IsarUint8List>[];
-  for (final str in object.urls) {
-    final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-    urls$BytesList.add(bytes);
-    urls$BytesCount += bytes.length as int;
-  }
-  final size = (staticSize +
-      3 +
-      (memo$Bytes.length) +
-      3 +
-      (name$Bytes.length) +
-      urls$BytesCount) as int;
-  cObj.buffer = alloc(size);
-  cObj.buffer_length = size;
-
-  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeHeader();
-  writer.writeByteList(offsets[0], memo$Bytes);
-  writer.writeByteList(offsets[1], name$Bytes);
-  writer.writeByteLists(offsets[2], urls$BytesList);
-}
-
-Service _serviceDeserializeNative(IsarCollection<Service> collection, int id,
-    IsarBinaryReader reader, List<int> offsets) {
+Service _serviceDeserializeNative(
+  Id id,
+  IsarBinaryReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
   final object = Service();
   object.memo = reader.readString(offsets[0]);
   object.name = reader.readString(offsets[1]);
   object.urls = reader.readStringList(offsets[2]) ?? [];
-  _serviceAttachLinks(collection, id, object);
   return object;
 }
 
 P _serviceDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
+  IsarBinaryReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
@@ -629,56 +687,40 @@ P _serviceDeserializePropNative<P>(
     case 2:
       return (reader.readStringList(offset) ?? []) as P;
     default:
-      throw IsarError('Illegal propertyIndex');
+      throw IsarError('Unknown property with id $propertyId');
   }
 }
 
 Object _serviceSerializeWeb(
     IsarCollection<Service> collection, Service object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, r'id', object.id);
-  IsarNative.jsObjectSet(jsObj, r'memo', object.memo);
-  IsarNative.jsObjectSet(jsObj, r'name', object.name);
-  IsarNative.jsObjectSet(jsObj, r'urls', object.urls);
-  return jsObj;
+  /*final jsObj = IsarNative.newJsObject();*/ throw UnimplementedError();
 }
 
 Service _serviceDeserializeWeb(
     IsarCollection<Service> collection, Object jsObj) {
-  final object = Service();
-  object.memo = IsarNative.jsObjectGet(jsObj, r'memo') ?? '';
-  object.name = IsarNative.jsObjectGet(jsObj, r'name') ?? '';
-  object.urls = (IsarNative.jsObjectGet(jsObj, r'urls') as List?)
-          ?.map((e) => e ?? '')
-          .toList()
-          .cast<String>() ??
-      [];
-  _serviceAttachLinks(collection, IsarNative.jsObjectGet(jsObj, r'id'), object);
-  return object;
+  /*final object = Service();object.memo = IsarNative.jsObjectGet(jsObj, r'memo') ?? '';object.name = IsarNative.jsObjectGet(jsObj, r'name') ?? '';object.urls = (IsarNative.jsObjectGet(jsObj, r'urls') as List?)?.map((e) => e ?? '').toList().cast<String>() ?? [];*/
+  //return object;
+  throw UnimplementedError();
 }
 
 P _serviceDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
-    case r'id':
-      return (IsarNative.jsObjectGet(jsObj, r'id')) as P;
-    case r'memo':
-      return (IsarNative.jsObjectGet(jsObj, r'memo') ?? '') as P;
-    case r'name':
-      return (IsarNative.jsObjectGet(jsObj, r'name') ?? '') as P;
-    case r'urls':
-      return ((IsarNative.jsObjectGet(jsObj, r'urls') as List?)
-              ?.map((e) => e ?? '')
-              .toList()
-              .cast<String>() ??
-          []) as P;
     default:
       throw IsarError('Illegal propertyName');
   }
 }
 
-void _serviceAttachLinks(IsarCollection<dynamic> col, int id, Service object) {
-  object.category.attach(col, col.isar.categories, r'category', id);
-  object.accounts.attach(col, col.isar.accounts, r'accounts', id);
+Id _serviceGetId(Service object) {
+  return object.id;
+}
+
+List<IsarLinkBase<dynamic>> _serviceGetLinks(Service object) {
+  return [object.category, object.accounts];
+}
+
+void _serviceAttach(IsarCollection<dynamic> col, Id id, Service object) {
+  object.category.attach(col, col.isar.collection<Category>(), r'category', id);
+  object.accounts.attach(col, col.isar.collection<Account>(), r'accounts', id);
 }
 
 extension ServiceQueryWhereSort on QueryBuilder<Service, Service, QWhere> {
@@ -869,8 +911,8 @@ extension ServiceQueryFilter
 
   QueryBuilder<Service, Service, QAfterFilterCondition> memoGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -884,8 +926,8 @@ extension ServiceQueryFilter
 
   QueryBuilder<Service, Service, QAfterFilterCondition> memoLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
@@ -900,9 +942,9 @@ extension ServiceQueryFilter
   QueryBuilder<Service, Service, QAfterFilterCondition> memoBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -966,6 +1008,24 @@ extension ServiceQueryFilter
     });
   }
 
+  QueryBuilder<Service, Service, QAfterFilterCondition> memoIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'memo',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Service, Service, QAfterFilterCondition> memoIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'memo',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<Service, Service, QAfterFilterCondition> nameEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -981,8 +1041,8 @@ extension ServiceQueryFilter
 
   QueryBuilder<Service, Service, QAfterFilterCondition> nameGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -996,8 +1056,8 @@ extension ServiceQueryFilter
 
   QueryBuilder<Service, Service, QAfterFilterCondition> nameLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
@@ -1012,9 +1072,9 @@ extension ServiceQueryFilter
   QueryBuilder<Service, Service, QAfterFilterCondition> nameBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -1078,6 +1138,24 @@ extension ServiceQueryFilter
     });
   }
 
+  QueryBuilder<Service, Service, QAfterFilterCondition> nameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'name',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Service, Service, QAfterFilterCondition> nameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'name',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<Service, Service, QAfterFilterCondition> urlsElementEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1093,8 +1171,8 @@ extension ServiceQueryFilter
 
   QueryBuilder<Service, Service, QAfterFilterCondition> urlsElementGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -1108,8 +1186,8 @@ extension ServiceQueryFilter
 
   QueryBuilder<Service, Service, QAfterFilterCondition> urlsElementLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
@@ -1124,9 +1202,9 @@ extension ServiceQueryFilter
   QueryBuilder<Service, Service, QAfterFilterCondition> urlsElementBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -1189,34 +1267,188 @@ extension ServiceQueryFilter
       ));
     });
   }
+
+  QueryBuilder<Service, Service, QAfterFilterCondition> urlsElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'urls',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Service, Service, QAfterFilterCondition>
+      urlsElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'urls',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Service, Service, QAfterFilterCondition> urlsLengthEqualTo(
+      int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'urls',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Service, Service, QAfterFilterCondition> urlsIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'urls',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Service, Service, QAfterFilterCondition> urlsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'urls',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Service, Service, QAfterFilterCondition> urlsLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'urls',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<Service, Service, QAfterFilterCondition> urlsLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'urls',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Service, Service, QAfterFilterCondition> urlsLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'urls',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
 }
+
+extension ServiceQueryObject
+    on QueryBuilder<Service, Service, QFilterCondition> {}
 
 extension ServiceQueryLinks
     on QueryBuilder<Service, Service, QFilterCondition> {
   QueryBuilder<Service, Service, QAfterFilterCondition> category(
       FilterQuery<Category> q) {
     return QueryBuilder.apply(this, (query) {
-      return query.link(
-        query.collection.isar.categories,
-        q,
-        r'category',
-      );
+      return query.link(q, r'category');
+    });
+  }
+
+  QueryBuilder<Service, Service, QAfterFilterCondition> categoryIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'category', 0, true, 0, true);
     });
   }
 
   QueryBuilder<Service, Service, QAfterFilterCondition> accounts(
       FilterQuery<Account> q) {
     return QueryBuilder.apply(this, (query) {
-      return query.link(
-        query.collection.isar.accounts,
-        q,
-        r'accounts',
-      );
+      return query.link(q, r'accounts');
+    });
+  }
+
+  QueryBuilder<Service, Service, QAfterFilterCondition> accountsLengthEqualTo(
+      int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'accounts', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<Service, Service, QAfterFilterCondition> accountsIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'accounts', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<Service, Service, QAfterFilterCondition> accountsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'accounts', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<Service, Service, QAfterFilterCondition> accountsLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'accounts', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<Service, Service, QAfterFilterCondition>
+      accountsLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'accounts', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<Service, Service, QAfterFilterCondition> accountsLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(
+          r'accounts', lower, includeLower, upper, includeUpper);
     });
   }
 }
 
-extension ServiceQueryWhereSortBy on QueryBuilder<Service, Service, QSortBy> {
+extension ServiceQuerySortBy on QueryBuilder<Service, Service, QSortBy> {
   QueryBuilder<Service, Service, QAfterSortBy> sortByMemo() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'memo', Sort.asc);
@@ -1242,7 +1474,7 @@ extension ServiceQueryWhereSortBy on QueryBuilder<Service, Service, QSortBy> {
   }
 }
 
-extension ServiceQueryWhereSortThenBy
+extension ServiceQuerySortThenBy
     on QueryBuilder<Service, Service, QSortThenBy> {
   QueryBuilder<Service, Service, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
@@ -1332,90 +1564,107 @@ extension ServiceQueryProperty
 }
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, avoid_js_rounded_ints, prefer_final_locals
 
 extension GetAccountCollection on Isar {
-  IsarCollection<Account> get accounts => collection();
+  IsarCollection<Account> get accounts => this.collection();
 }
 
 const AccountSchema = CollectionSchema(
   name: r'Account',
-  schema:
-      r'{"name":"Account","idName":"id","properties":[{"name":"password","type":"String"},{"name":"totp","type":"String"},{"name":"username","type":"String"}],"indexes":[],"links":[{"name":"service","target":"Service"}]}',
-  idName: r'id',
-  propertyIds: {r'password': 0, r'totp': 1, r'username': 2},
-  listProperties: {},
-  indexIds: {},
-  indexValueTypes: {},
-  linkIds: {r'service': 0, r'fields': 1},
-  backlinkLinkNames: {r'fields': r'account'},
-  getId: _accountGetId,
-  getLinks: _accountGetLinks,
-  attachLinks: _accountAttachLinks,
+  id: -6646797162501847804,
+  properties: {
+    r'password': PropertySchema(
+      id: 0,
+      name: r'password',
+      type: IsarType.string,
+    ),
+    r'totp': PropertySchema(
+      id: 1,
+      name: r'totp',
+      type: IsarType.string,
+    ),
+    r'username': PropertySchema(
+      id: 2,
+      name: r'username',
+      type: IsarType.string,
+    )
+  },
+  estimateSize: _accountEstimateSize,
   serializeNative: _accountSerializeNative,
   deserializeNative: _accountDeserializeNative,
   deserializePropNative: _accountDeserializePropNative,
   serializeWeb: _accountSerializeWeb,
   deserializeWeb: _accountDeserializeWeb,
   deserializePropWeb: _accountDeserializePropWeb,
-  version: 4,
+  idName: r'id',
+  indexes: {},
+  links: {
+    r'service': LinkSchema(
+      id: -514987929734700439,
+      name: r'service',
+      target: r'Service',
+      isSingle: true,
+    ),
+    r'fields': LinkSchema(
+      id: 3596427177197100331,
+      name: r'fields',
+      target: r'Field',
+      isSingle: false,
+      linkName: r'account',
+    )
+  },
+  embeddedSchemas: {},
+  getId: _accountGetId,
+  getLinks: _accountGetLinks,
+  attach: _accountAttach,
+  version: '3.0.0-dev.13',
 );
 
-int? _accountGetId(Account object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
-  }
+int _accountEstimateSize(
+  Account object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.password.length * 3;
+  bytesCount += 3 + object.totp.length * 3;
+  bytesCount += 3 + object.username.length * 3;
+  return bytesCount;
 }
 
-List<IsarLinkBase<dynamic>> _accountGetLinks(Account object) {
-  return [object.service, object.fields];
+int _accountSerializeNative(
+  Account object,
+  IsarBinaryWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeString(offsets[0], object.password);
+  writer.writeString(offsets[1], object.totp);
+  writer.writeString(offsets[2], object.username);
+  return writer.usedBytes;
 }
 
-void _accountSerializeNative(
-    IsarCollection<Account> collection,
-    IsarCObject cObj,
-    Account object,
-    int staticSize,
-    List<int> offsets,
-    AdapterAlloc alloc) {
-  final password$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.password);
-  final totp$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.totp);
-  final username$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.username);
-  final size = (staticSize +
-      3 +
-      (password$Bytes.length) +
-      3 +
-      (totp$Bytes.length) +
-      3 +
-      (username$Bytes.length)) as int;
-  cObj.buffer = alloc(size);
-  cObj.buffer_length = size;
-
-  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeHeader();
-  writer.writeByteList(offsets[0], password$Bytes);
-  writer.writeByteList(offsets[1], totp$Bytes);
-  writer.writeByteList(offsets[2], username$Bytes);
-}
-
-Account _accountDeserializeNative(IsarCollection<Account> collection, int id,
-    IsarBinaryReader reader, List<int> offsets) {
+Account _accountDeserializeNative(
+  Id id,
+  IsarBinaryReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
   final object = Account();
   object.password = reader.readString(offsets[0]);
   object.totp = reader.readString(offsets[1]);
   object.username = reader.readString(offsets[2]);
-  _accountAttachLinks(collection, id, object);
   return object;
 }
 
 P _accountDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
+  IsarBinaryReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
@@ -1423,48 +1672,40 @@ P _accountDeserializePropNative<P>(
     case 2:
       return (reader.readString(offset)) as P;
     default:
-      throw IsarError('Illegal propertyIndex');
+      throw IsarError('Unknown property with id $propertyId');
   }
 }
 
 Object _accountSerializeWeb(
     IsarCollection<Account> collection, Account object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, r'id', object.id);
-  IsarNative.jsObjectSet(jsObj, r'password', object.password);
-  IsarNative.jsObjectSet(jsObj, r'totp', object.totp);
-  IsarNative.jsObjectSet(jsObj, r'username', object.username);
-  return jsObj;
+  /*final jsObj = IsarNative.newJsObject();*/ throw UnimplementedError();
 }
 
 Account _accountDeserializeWeb(
     IsarCollection<Account> collection, Object jsObj) {
-  final object = Account();
-  object.password = IsarNative.jsObjectGet(jsObj, r'password') ?? '';
-  object.totp = IsarNative.jsObjectGet(jsObj, r'totp') ?? '';
-  object.username = IsarNative.jsObjectGet(jsObj, r'username') ?? '';
-  _accountAttachLinks(collection, IsarNative.jsObjectGet(jsObj, r'id'), object);
-  return object;
+  /*final object = Account();object.password = IsarNative.jsObjectGet(jsObj, r'password') ?? '';object.totp = IsarNative.jsObjectGet(jsObj, r'totp') ?? '';object.username = IsarNative.jsObjectGet(jsObj, r'username') ?? '';*/
+  //return object;
+  throw UnimplementedError();
 }
 
 P _accountDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
-    case r'id':
-      return (IsarNative.jsObjectGet(jsObj, r'id')) as P;
-    case r'password':
-      return (IsarNative.jsObjectGet(jsObj, r'password') ?? '') as P;
-    case r'totp':
-      return (IsarNative.jsObjectGet(jsObj, r'totp') ?? '') as P;
-    case r'username':
-      return (IsarNative.jsObjectGet(jsObj, r'username') ?? '') as P;
     default:
       throw IsarError('Illegal propertyName');
   }
 }
 
-void _accountAttachLinks(IsarCollection<dynamic> col, int id, Account object) {
-  object.service.attach(col, col.isar.services, r'service', id);
-  object.fields.attach(col, col.isar.fields, r'fields', id);
+Id _accountGetId(Account object) {
+  return object.id;
+}
+
+List<IsarLinkBase<dynamic>> _accountGetLinks(Account object) {
+  return [object.service, object.fields];
+}
+
+void _accountAttach(IsarCollection<dynamic> col, Id id, Account object) {
+  object.service.attach(col, col.isar.collection<Service>(), r'service', id);
+  object.fields.attach(col, col.isar.collection<Field>(), r'fields', id);
 }
 
 extension AccountQueryWhereSort on QueryBuilder<Account, Account, QWhere> {
@@ -1611,8 +1852,8 @@ extension AccountQueryFilter
 
   QueryBuilder<Account, Account, QAfterFilterCondition> passwordGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -1626,8 +1867,8 @@ extension AccountQueryFilter
 
   QueryBuilder<Account, Account, QAfterFilterCondition> passwordLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
@@ -1642,9 +1883,9 @@ extension AccountQueryFilter
   QueryBuilder<Account, Account, QAfterFilterCondition> passwordBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -1708,6 +1949,24 @@ extension AccountQueryFilter
     });
   }
 
+  QueryBuilder<Account, Account, QAfterFilterCondition> passwordIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'password',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> passwordIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'password',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<Account, Account, QAfterFilterCondition> totpEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1723,8 +1982,8 @@ extension AccountQueryFilter
 
   QueryBuilder<Account, Account, QAfterFilterCondition> totpGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -1738,8 +1997,8 @@ extension AccountQueryFilter
 
   QueryBuilder<Account, Account, QAfterFilterCondition> totpLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
@@ -1754,9 +2013,9 @@ extension AccountQueryFilter
   QueryBuilder<Account, Account, QAfterFilterCondition> totpBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -1820,6 +2079,24 @@ extension AccountQueryFilter
     });
   }
 
+  QueryBuilder<Account, Account, QAfterFilterCondition> totpIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'totp',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> totpIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'totp',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<Account, Account, QAfterFilterCondition> usernameEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1835,8 +2112,8 @@ extension AccountQueryFilter
 
   QueryBuilder<Account, Account, QAfterFilterCondition> usernameGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -1850,8 +2127,8 @@ extension AccountQueryFilter
 
   QueryBuilder<Account, Account, QAfterFilterCondition> usernameLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
@@ -1866,9 +2143,9 @@ extension AccountQueryFilter
   QueryBuilder<Account, Account, QAfterFilterCondition> usernameBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -1931,34 +2208,102 @@ extension AccountQueryFilter
       ));
     });
   }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> usernameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'username',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> usernameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'username',
+        value: '',
+      ));
+    });
+  }
 }
+
+extension AccountQueryObject
+    on QueryBuilder<Account, Account, QFilterCondition> {}
 
 extension AccountQueryLinks
     on QueryBuilder<Account, Account, QFilterCondition> {
   QueryBuilder<Account, Account, QAfterFilterCondition> service(
       FilterQuery<Service> q) {
     return QueryBuilder.apply(this, (query) {
-      return query.link(
-        query.collection.isar.services,
-        q,
-        r'service',
-      );
+      return query.link(q, r'service');
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> serviceIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'service', 0, true, 0, true);
     });
   }
 
   QueryBuilder<Account, Account, QAfterFilterCondition> fields(
       FilterQuery<Field> q) {
     return QueryBuilder.apply(this, (query) {
-      return query.link(
-        query.collection.isar.fields,
-        q,
-        r'fields',
-      );
+      return query.link(q, r'fields');
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> fieldsLengthEqualTo(
+      int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'fields', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> fieldsIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'fields', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> fieldsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'fields', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> fieldsLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'fields', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> fieldsLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'fields', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<Account, Account, QAfterFilterCondition> fieldsLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(
+          r'fields', lower, includeLower, upper, includeUpper);
     });
   }
 }
 
-extension AccountQueryWhereSortBy on QueryBuilder<Account, Account, QSortBy> {
+extension AccountQuerySortBy on QueryBuilder<Account, Account, QSortBy> {
   QueryBuilder<Account, Account, QAfterSortBy> sortByPassword() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'password', Sort.asc);
@@ -1996,7 +2341,7 @@ extension AccountQueryWhereSortBy on QueryBuilder<Account, Account, QSortBy> {
   }
 }
 
-extension AccountQueryWhereSortThenBy
+extension AccountQuerySortThenBy
     on QueryBuilder<Account, Account, QSortThenBy> {
   QueryBuilder<Account, Account, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
@@ -2099,79 +2444,99 @@ extension AccountQueryProperty
 }
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, avoid_js_rounded_ints, prefer_final_locals
 
 extension GetFieldCollection on Isar {
-  IsarCollection<Field> get fields => collection();
+  IsarCollection<Field> get fields => this.collection();
 }
 
 const FieldSchema = CollectionSchema(
   name: r'Field',
-  schema:
-      r'{"name":"Field","idName":"id","properties":[{"name":"canObscure","type":"Bool"},{"name":"key","type":"String"},{"name":"value","type":"String"}],"indexes":[],"links":[{"name":"account","target":"Account"}]}',
-  idName: r'id',
-  propertyIds: {r'canObscure': 0, r'key': 1, r'value': 2},
-  listProperties: {},
-  indexIds: {},
-  indexValueTypes: {},
-  linkIds: {r'account': 0},
-  backlinkLinkNames: {},
-  getId: _fieldGetId,
-  getLinks: _fieldGetLinks,
-  attachLinks: _fieldAttachLinks,
+  id: 256898425088394984,
+  properties: {
+    r'canObscure': PropertySchema(
+      id: 0,
+      name: r'canObscure',
+      type: IsarType.bool,
+    ),
+    r'key': PropertySchema(
+      id: 1,
+      name: r'key',
+      type: IsarType.string,
+    ),
+    r'value': PropertySchema(
+      id: 2,
+      name: r'value',
+      type: IsarType.string,
+    )
+  },
+  estimateSize: _fieldEstimateSize,
   serializeNative: _fieldSerializeNative,
   deserializeNative: _fieldDeserializeNative,
   deserializePropNative: _fieldDeserializePropNative,
   serializeWeb: _fieldSerializeWeb,
   deserializeWeb: _fieldDeserializeWeb,
   deserializePropWeb: _fieldDeserializePropWeb,
-  version: 4,
+  idName: r'id',
+  indexes: {},
+  links: {
+    r'account': LinkSchema(
+      id: -1027811819685562188,
+      name: r'account',
+      target: r'Account',
+      isSingle: true,
+    )
+  },
+  embeddedSchemas: {},
+  getId: _fieldGetId,
+  getLinks: _fieldGetLinks,
+  attach: _fieldAttach,
+  version: '3.0.0-dev.13',
 );
 
-int? _fieldGetId(Field object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
-  }
+int _fieldEstimateSize(
+  Field object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.key.length * 3;
+  bytesCount += 3 + object.value.length * 3;
+  return bytesCount;
 }
 
-List<IsarLinkBase<dynamic>> _fieldGetLinks(Field object) {
-  return [object.account];
-}
-
-void _fieldSerializeNative(IsarCollection<Field> collection, IsarCObject cObj,
-    Field object, int staticSize, List<int> offsets, AdapterAlloc alloc) {
-  final key$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.key);
-  final value$Bytes = IsarBinaryWriter.utf8Encoder.convert(object.value);
-  final size =
-      (staticSize + 3 + (key$Bytes.length) + 3 + (value$Bytes.length)) as int;
-  cObj.buffer = alloc(size);
-  cObj.buffer_length = size;
-
-  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeHeader();
+int _fieldSerializeNative(
+  Field object,
+  IsarBinaryWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
   writer.writeBool(offsets[0], object.canObscure);
-  writer.writeByteList(offsets[1], key$Bytes);
-  writer.writeByteList(offsets[2], value$Bytes);
+  writer.writeString(offsets[1], object.key);
+  writer.writeString(offsets[2], object.value);
+  return writer.usedBytes;
 }
 
-Field _fieldDeserializeNative(IsarCollection<Field> collection, int id,
-    IsarBinaryReader reader, List<int> offsets) {
+Field _fieldDeserializeNative(
+  Id id,
+  IsarBinaryReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
   final object = Field();
   object.canObscure = reader.readBool(offsets[0]);
   object.key = reader.readString(offsets[1]);
   object.value = reader.readString(offsets[2]);
-  _fieldAttachLinks(collection, id, object);
   return object;
 }
 
 P _fieldDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
+  IsarBinaryReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
     case 0:
       return (reader.readBool(offset)) as P;
     case 1:
@@ -2179,45 +2544,37 @@ P _fieldDeserializePropNative<P>(
     case 2:
       return (reader.readString(offset)) as P;
     default:
-      throw IsarError('Illegal propertyIndex');
+      throw IsarError('Unknown property with id $propertyId');
   }
 }
 
 Object _fieldSerializeWeb(IsarCollection<Field> collection, Field object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, r'canObscure', object.canObscure);
-  IsarNative.jsObjectSet(jsObj, r'id', object.id);
-  IsarNative.jsObjectSet(jsObj, r'key', object.key);
-  IsarNative.jsObjectSet(jsObj, r'value', object.value);
-  return jsObj;
+  /*final jsObj = IsarNative.newJsObject();*/ throw UnimplementedError();
 }
 
 Field _fieldDeserializeWeb(IsarCollection<Field> collection, Object jsObj) {
-  final object = Field();
-  object.canObscure = IsarNative.jsObjectGet(jsObj, r'canObscure') ?? false;
-  object.key = IsarNative.jsObjectGet(jsObj, r'key') ?? '';
-  object.value = IsarNative.jsObjectGet(jsObj, r'value') ?? '';
-  _fieldAttachLinks(collection, IsarNative.jsObjectGet(jsObj, r'id'), object);
-  return object;
+  /*final object = Field();object.canObscure = IsarNative.jsObjectGet(jsObj, r'canObscure') ?? false;object.key = IsarNative.jsObjectGet(jsObj, r'key') ?? '';object.value = IsarNative.jsObjectGet(jsObj, r'value') ?? '';*/
+  //return object;
+  throw UnimplementedError();
 }
 
 P _fieldDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
-    case r'canObscure':
-      return (IsarNative.jsObjectGet(jsObj, r'canObscure') ?? false) as P;
-    case r'id':
-      return (IsarNative.jsObjectGet(jsObj, r'id')) as P;
-    case r'key':
-      return (IsarNative.jsObjectGet(jsObj, r'key') ?? '') as P;
-    case r'value':
-      return (IsarNative.jsObjectGet(jsObj, r'value') ?? '') as P;
     default:
       throw IsarError('Illegal propertyName');
   }
 }
 
-void _fieldAttachLinks(IsarCollection<dynamic> col, int id, Field object) {
-  object.account.attach(col, col.isar.accounts, r'account', id);
+Id _fieldGetId(Field object) {
+  return object.id;
+}
+
+List<IsarLinkBase<dynamic>> _fieldGetLinks(Field object) {
+  return [object.account];
+}
+
+void _fieldAttach(IsarCollection<dynamic> col, Id id, Field object) {
+  object.account.attach(col, col.isar.collection<Account>(), r'account', id);
 }
 
 extension FieldQueryWhereSort on QueryBuilder<Field, Field, QWhere> {
@@ -2373,8 +2730,8 @@ extension FieldQueryFilter on QueryBuilder<Field, Field, QFilterCondition> {
 
   QueryBuilder<Field, Field, QAfterFilterCondition> keyGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -2388,8 +2745,8 @@ extension FieldQueryFilter on QueryBuilder<Field, Field, QFilterCondition> {
 
   QueryBuilder<Field, Field, QAfterFilterCondition> keyLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
@@ -2404,9 +2761,9 @@ extension FieldQueryFilter on QueryBuilder<Field, Field, QFilterCondition> {
   QueryBuilder<Field, Field, QAfterFilterCondition> keyBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -2468,6 +2825,24 @@ extension FieldQueryFilter on QueryBuilder<Field, Field, QFilterCondition> {
     });
   }
 
+  QueryBuilder<Field, Field, QAfterFilterCondition> keyIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'key',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> keyIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'key',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<Field, Field, QAfterFilterCondition> valueEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -2483,8 +2858,8 @@ extension FieldQueryFilter on QueryBuilder<Field, Field, QFilterCondition> {
 
   QueryBuilder<Field, Field, QAfterFilterCondition> valueGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -2498,8 +2873,8 @@ extension FieldQueryFilter on QueryBuilder<Field, Field, QFilterCondition> {
 
   QueryBuilder<Field, Field, QAfterFilterCondition> valueLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
@@ -2514,9 +2889,9 @@ extension FieldQueryFilter on QueryBuilder<Field, Field, QFilterCondition> {
   QueryBuilder<Field, Field, QAfterFilterCondition> valueBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -2577,22 +2952,44 @@ extension FieldQueryFilter on QueryBuilder<Field, Field, QFilterCondition> {
       ));
     });
   }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> valueIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'value',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> valueIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'value',
+        value: '',
+      ));
+    });
+  }
 }
+
+extension FieldQueryObject on QueryBuilder<Field, Field, QFilterCondition> {}
 
 extension FieldQueryLinks on QueryBuilder<Field, Field, QFilterCondition> {
   QueryBuilder<Field, Field, QAfterFilterCondition> account(
       FilterQuery<Account> q) {
     return QueryBuilder.apply(this, (query) {
-      return query.link(
-        query.collection.isar.accounts,
-        q,
-        r'account',
-      );
+      return query.link(q, r'account');
+    });
+  }
+
+  QueryBuilder<Field, Field, QAfterFilterCondition> accountIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'account', 0, true, 0, true);
     });
   }
 }
 
-extension FieldQueryWhereSortBy on QueryBuilder<Field, Field, QSortBy> {
+extension FieldQuerySortBy on QueryBuilder<Field, Field, QSortBy> {
   QueryBuilder<Field, Field, QAfterSortBy> sortByCanObscure() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'canObscure', Sort.asc);
@@ -2630,7 +3027,7 @@ extension FieldQueryWhereSortBy on QueryBuilder<Field, Field, QSortBy> {
   }
 }
 
-extension FieldQueryWhereSortThenBy on QueryBuilder<Field, Field, QSortThenBy> {
+extension FieldQuerySortThenBy on QueryBuilder<Field, Field, QSortThenBy> {
   QueryBuilder<Field, Field, QAfterSortBy> thenByCanObscure() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'canObscure', Sort.asc);
