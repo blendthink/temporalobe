@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -94,7 +95,7 @@ class _State extends ConsumerState<ServiceCreatePage> {
                   accounts: [],
                 );
 
-                print(jsonEncode(service));
+                log(jsonEncode(service));
               },
               icon: const Icon(Icons.save),
             ),

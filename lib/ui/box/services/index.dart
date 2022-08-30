@@ -11,11 +11,13 @@ class ServicesPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final t = Theme.of(context);
+    // final t = Theme.of(context);
     return Scaffold(
       appBar: SearchAppBar(
         onSearch: (text) {
-          log(text);
+          if (text.isNotEmpty) {
+            log(text);
+          }
         },
       ),
       body: Column(
