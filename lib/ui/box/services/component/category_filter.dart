@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 
 const double _kListPadding = 8;
 const _kListGap = Gap(_kListPadding / 2);
-const double _kChipHeight = 32;
+const double _kChipHeight = 34;
 const double _kListHeight = _kChipHeight + _kListPadding * 2;
 
 class CategoryFilter extends StatefulWidget {
@@ -35,7 +35,10 @@ class _State extends State<CategoryFilter> {
         itemBuilder: (context, index) {
           final category = widget.categories[index];
           return ChoiceChip(
-            label: Text(category),
+            label: Text(
+              category,
+              style: Theme.of(context).textTheme.labelMedium,
+            ),
             selected: _selectedIndex == index,
             onSelected: (selected) {
               setState(() {
